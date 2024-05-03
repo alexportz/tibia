@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIBIA</title>
+    <style type="text/css">
+        body {
+            background:#000;
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+            overflow:hidden;
+        }
+        #tela {
+            background:#000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="tela"></canvas>
+
+    <script type="module">
+        //IMPORTA ARQUIVOS EXTERNOS
+        import Sqm from "/js/Sqm.js";
+        import Mapa from "/js/Mapa.js";
+
+        const cnv = document.querySelector("#tela");
+        const ctx = cnv.getContext("2d");
+
+        //DEFINE TAMANHO DO CANVAS
+        cnv.width = innerWidth;
+        cnv.height = innerHeight;
+
+        //Definições Iniciais
+        let sqmSizeX = 32;
+        let sqmSizeY = 32;
+
+        //Define tela Visual do Game
+        let maxSqmX = 15;
+        let maxSqmY = 11;
+        let totalSqms = maxSqmX * maxSqmY;
+        let mapaView = new Mapa(ctx,0,70,0,0,sqmSizeX,sqmSizeY,maxSqmX,maxSqmY,"#c2c2c2");
+            mapaView.draw();
+         
+  
+
+        //DEFINE A SPRITE USADA
+        const spriteMapa = new Image();
+              spriteMapa.src = "sprites/mapa.png";
+ 
+        function startGame(){
+
+            //VARIAL
+            let posRenderX = 0;
+            let posRenderY = 32;
+            let posDoSqmX = mapaView.position.x;
+            let posDoSqmY = mapaView.position.y;
+
+            //CRIA LOOP FOR PARA OS SQM
+            for (let i=0; i < totalSqms; i++){
+                //Cria Variavel do SQM
+                let meuSqm1 = new Sqm(ctx,posDoSqmX,posDoSqmY,sqmSizeX,sqmSizeY,spriteMapa,posRenderX,posRenderY,sqmSizeX,sqmSizeY,posDoSqmX,posDoSqmY,sqmSizeX,sqmSizeY);
+                //RENDERIZA SQM
+                meuSqm1.renderiza();
+                //Acrescenta novo valor na posX
+                posDoSqmX += sqmSizeX;
+
+                //ZERA POSICOES NO LIMETE DO MAPA
+                if(posDoSqmX > mapaView.size.w + sqmSizeX){
+                    posDoSqmX = mapaView.position.x;
+                    posDoSqmY += sqmSizeY;
+                }
+            }
+
+        }
+ 
+        //CARREGA O GAME
+        spriteMapa.onload = function(){
+            console.log("Carregou o Game");
+            startGame();
+        }
+    </script>
+
+
+</body>
+</html>
