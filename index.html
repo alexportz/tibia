@@ -40,23 +40,49 @@
         let maxSqmX = 15;
         let maxSqmY = 11;
         let totalSqms = maxSqmX * maxSqmY;
-        let mapaView = new Mapa(ctx,0,70,0,0,sqmSizeX,sqmSizeY,maxSqmX,maxSqmY,"#c2c2c2");
+        let mapaView = new Mapa(ctx,0,70,0,0,sqmSizeX,sqmSizeY,maxSqmX,maxSqmY,"#c2c2c2",innerWidth,innerHeight);
             mapaView.draw();
          
   
+
+        //AJUSTE RESOLUÇÃO
+        addEventListener("resize", function(){
+            //console.log("Alterou Resolução");
+            
+            //REDEFINE TAMANHO DO CANVAS
+            cnv.width = innerWidth;
+            cnv.height = innerHeight;
+
+            //Atualiza o TAMANHO da Tela e resdesenha MAP VIEW
+            mapaView.screenSize.w = innerWidth;
+            mapaView.screenSize.h = innerHeight;
+            mapaView.attPosition();
+            mapaView.draw();
+        })
+
 
         //DEFINE A SPRITE USADA
         const spriteMapa = new Image();
               spriteMapa.src = "sprites/mapa.png";
  
         function startGame(){
+            loopGame();
+        }
 
+        //FUNÇÃO DE LOOP
+        function loopGame(){
+            sqmDraw();
+            requestAnimationFrame(loopGame);
+        }
+
+        //FUNÇÃO DESENHA OS SQM
+        function sqmDraw(){
             //VARIAL
             let posRenderX = 0;
             let posRenderY = 32;
             let posDoSqmX = mapaView.position.x;
             let posDoSqmY = mapaView.position.y;
-
+            
             //CRIA LOOP FOR PARA OS SQM
             for (let i=0; i < totalSqms; i++){
                 //Cria Variavel do SQM
@@ -67,10 +93,14 @@
                 posDoSqmX += sqmSizeX;
 
                 //ZERA POSICOES NO LIMETE DO MAPA
-                if(posDoSqmX > mapaView.size.w + sqmSizeX){
+                let larguraDoMapaView = mapaView.size.w;
+                let gapMapaView = (innerWidth - larguraDoMapaView) / 2;
+            
+                if( posDoSqmX >= (larguraDoMapaView + gapMapaView) ){
                     posDoSqmX = mapaView.position.x;
                     posDoSqmY += sqmSizeY;
                 }
+                
             }
 
         }
@@ -80,6 +110,8 @@
             console.log("Carregou o Game");
             startGame();
         }
+
+
     </script>
 
 
