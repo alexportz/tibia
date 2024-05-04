@@ -42,7 +42,6 @@
         let totalSqms = maxSqmX * maxSqmY;
         let mapaView = new Mapa(ctx,0,70,0,0,sqmSizeX,sqmSizeY,maxSqmX,maxSqmY,"#c2c2c2",innerWidth,innerHeight);
             mapaView.draw();
-         
   
 
         //AJUSTE RESOLUÇÃO
@@ -53,17 +52,17 @@
             cnv.width = innerWidth;
             cnv.height = innerHeight;
 
-            //Atualiza o TAMANHO da Tela e resdesenha MAP VIEW
-            mapaView.screenSize.w = innerWidth;
-            mapaView.screenSize.h = innerHeight;
-            mapaView.attPosition();
-            mapaView.draw();
+            //Atualiza Canva e Redesenha View Port
+            atualizaMapView();
+            
         })
 
 
         //DEFINE A SPRITE USADA
         const spriteMapa = new Image();
               spriteMapa.src = "sprites/mapa.png";
+        const spritePlayer = new Image();
+              spritePlayer.src = "sprites/player-cyc.png";
  
         function startGame(){
             loopGame();
@@ -71,7 +70,10 @@
 
         //FUNÇÃO DE LOOP
         function loopGame(){
+            ctx.clearRect(0,0,innerWidth,innerHeight);
             sqmDraw();
+            renderizaPlayer();
+            centroDaTela();
             requestAnimationFrame(loopGame);
         }
 
@@ -82,9 +84,15 @@
             let posRenderY = 32;
             let posDoSqmX = mapaView.position.x;
             let posDoSqmY = mapaView.position.y;
-            
+
             //CRIA LOOP FOR PARA OS SQM
             for (let i=0; i < totalSqms; i++){
+
+                ctx.save();
+                ctx.strokeStyle = "#0F0";
+                ctx.strokeRect(posDoSqmX,posDoSqmY,sqmSizeX,sqmSizeY);
+                ctx.restore();
+
                 //Cria Variavel do SQM
                 let meuSqm1 = new Sqm(ctx,posDoSqmX,posDoSqmY,sqmSizeX,sqmSizeY,spriteMapa,posRenderX,posRenderY,sqmSizeX,sqmSizeY,posDoSqmX,posDoSqmY,sqmSizeX,sqmSizeY);
                 //RENDERIZA SQM
@@ -102,7 +110,6 @@
                 }
                 
             }
-
         }
  
         //CARREGA O GAME
@@ -111,6 +118,51 @@
             startGame();
         }
 
+        //FUNÇÕES//
+        //ATUALIZAR POSICAO DO MAP VIEW
+        function atualizaMapView() {
+            //Atualiza o TAMANHO da Tela e resdesenha MAP VIEW
+            mapaView.screenSize.w = innerWidth;
+            mapaView.screenSize.h = innerHeight;
+            mapaView.attPosition();
+            mapaView.draw();
+        }
+
+        function centroDaTela(){
+            let meioTelaHorizontal = innerHeight/2;
+            let meioTelaVertical = innerWidth/2;
+
+            ctx.strokeStyle = "#F00";
+            ctx.beginPath();
+            ctx.moveTo(0, meioTelaHorizontal);
+            ctx.lineTo(innerWidth, meioTelaHorizontal);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(meioTelaVertical, 0);
+            ctx.lineTo(meioTelaVertical, innerHeight);
+            ctx.stroke();
+        }
+
+        //RENDERIZA PLAYER
+        function renderizaPlayer(){
+            let posPlayerX = innerWidth/2 - (64/2) - (32/2);
+            let posPlayerY = innerHeight/2 - (64/2) - (32/2);
+            let sx = 0;
+            let sy = 0;
+            let sw = 64;
+            let sh = 64;
+
+            let px = posPlayerX;
+            let py = posPlayerY;
+            let pw = 64;
+            let ph = 64;
+
+            ctx.fillStyle = "#00F";
+            ctx.drawImage(spritePlayer,sx,sy,sw,sh,px,py,pw,ph);
+            // ctx.fillRect(posPlayerX,posPlayerY,64,64);
+        }
+        
 
     </script>
 
