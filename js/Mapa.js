@@ -2,6 +2,8 @@ export default class Mapa {
     constructor(ctx,x,y,w,h,sqmSizeX,sqmSizeY,maxSqmX,maxSqmY,borderColor,screenSizeX,screenSizeY){
         this.ctx = ctx;
         this.borderColor = borderColor;
+        this.borderLT = "#292929";
+        this.borderBR = "#6d6d6d";
         this.sqmSizeX = sqmSizeX;
         this.sqmSizeY = sqmSizeY;
         this.maxSqmX = maxSqmX;
@@ -23,8 +25,28 @@ export default class Mapa {
 
     //Função Desenha Borda
     draw(){
-        this.ctx.strokeStyle = this.borderColor;
-        this.ctx.strokeRect(this.position.x,this.position.y,this.size.w,this.size.h);
+        this.ctx.save();
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeStyle = this.borderLT;
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.position.x,this.position.y);
+        this.ctx.lineTo(this.position.x, (this.size.h + this.position.y) );
+        this.ctx.moveTo(this.position.x,this.position.y);
+        this.ctx.lineTo((this.size.w + this.position.x), this.position.y );
+        this.ctx.stroke();
+        this.ctx.restore();
+
+        this.ctx.save();
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeStyle = this.borderBR;
+        this.ctx.beginPath();
+        this.ctx.moveTo((this.position.x + this.size.w), this.position.y);
+        this.ctx.lineTo((this.position.x + this.size.w), this.position.y + this.size.h);
+        this.ctx.lineTo(this.position.x, (this.size.h + this.position.y) );
+        this.ctx.stroke();
+        this.ctx.restore();
+        // this.ctx.strokeStyle = this.borderColor; 
+        // this.ctx.strokeRect(this.position.x,this.position.y,this.size.w,this.size.h);
     }
 
     //Função atualiza Posição

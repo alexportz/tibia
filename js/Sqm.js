@@ -24,6 +24,16 @@ export default class Sqm {
 
     //Renderiza o SQM
     renderiza(){
-        this.contexto.drawImage(this.sprite.img,this.sprite.x,this.sprite.y,this.sprite.w,this.sprite.h,this.sprite.px,this.sprite.py,this.sprite.pw,this.sprite.ph);
+        this.contexto.drawImage(
+            this.sprite.img,
+            this.sprite.x,
+            this.sprite.y,
+            this.sprite.w,
+            this.sprite.h,
+            this.sprite.px,
+            this.sprite.py,
+            this.sprite.pw,
+            this.sprite.ph
+        );
     }
 }

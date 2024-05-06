@@ -13,7 +13,7 @@
             overflow:hidden;
         }
         #tela {
-            background:#000;
+            background: url('sprites/ui-background.png');
         }
     </style>
 </head>
@@ -36,26 +36,30 @@
         //Definições Iniciais
         let sqmSizeX = 32;
         let sqmSizeY = 32;
-        let sqmDefaultSize = sqmSizeX;
-
+        //Define o tamanho do Player(render)
+        let playerSizeX = 64;
+        let playerSizeY = 64;
         //Define tela Visual do Game
         let maxSqmX = 15;
         let maxSqmY = 11;
-        let totalSqms = maxSqmX * maxSqmY;
-        let mapaView = new Mapa(ctx,0,70,0,0,sqmSizeX,sqmSizeY,maxSqmX,maxSqmY,"#c2c2c2",innerWidth,innerHeight);
-            mapaView.draw();
-  
+
+        let sqmDefaultSize = sqmSizeX; //Define tamanho padrão do SQMGeral
+        let meioTelaX = innerWidth/2; //Define meio da telaX ao abrir o browser
+        let meioTelaY = innerHeight/2; //Define meio da telaY ao abrir o browser
+        let totalSqms = maxSqmX * maxSqmY; //Define total de SQMs do MapaView
+        let margemX = innerWidth - (maxSqmX * sqmSizeX); //Define Margem esquerda de Acordo com o MapaView.
+        let margemY = innerHeight - (maxSqmY * sqmSizeY); //Define Margem direita de Acordo com o MapaView.
+        
+        //Instancia o MAPView
+        let mapaView = new Mapa(ctx,0,0,0,0,sqmSizeX,sqmSizeY,maxSqmX,maxSqmY,"#c2c2c2",innerWidth,innerHeight);
+           
 
         //AJUSTE RESOLUÇÃO
         addEventListener("resize", function(){
-            //console.log("Alterou Resolução");
-            
-            //REDEFINE TAMANHO DO CANVAS
-            cnv.width = innerWidth;
-            cnv.height = innerHeight;
-
             //Atualiza Canva e Redesenha View Port
-            atualizaMapView();
+            atualizaCanvaSize(); //Att tamanho da tela do Canva
+            atualizaMapView(); //Att tamanho do ViewMap (area visual do Mapa)
+            atualizaPlayer(); //Att posicao do player
         })
 
 
@@ -63,16 +67,98 @@
         const spriteMapa = new Image();
               spriteMapa.src = "sprites/mapa.png";
         const spritePlayer = new Image();
-              spritePlayer.src = "sprites/player-demon.png";
+              spritePlayer.src = "sprites/player-cyc.png";
 
         //INSTANCIA O PLAYER VAZIO
         let playerPrincipal = null;
 
         function startGame(){
+            
+            //CRIA O PLAYER "Define as conf. do Player"
+            createPlayer(playerPrincipal);
 
-            //DEFINIU AS PROPRIEDADES DO PLAYER
-            let sizeSpriteW = 96;
-            let sizeSpriteH = 96;
+            //INICIA O LOOP DO GAME
+            loopGame();
+        }
+
+        //FUNÇÃO DE LOOP
+        function loopGame(){
+            //Limpa todo o canvas (TelaInteira)
+            ctx.clearRect(0,0,innerWidth,innerHeight);
+
+            //Desenha os SQM na tela
+            sqmDraw();
+            mapaView.draw();
+
+            //RENDERIZA O PLAYER NA TELA
+            playerPrincipal.renderiza();
+
+            //DESENHA LINHAS DE CENTRO DA TELA
+            centroDaTela();
+
+            //CHAMA A MESMA FUNÇÃO
+            requestAnimationFrame(loopGame);
+        }
+
+        //FUNÇÃO DESENHA OS SQM
+        function sqmDraw(){
+            //VARIAL
+            let posRenderX = 0;
+            let posRenderY = 32;
+            let posDoSqmX = mapaView.position.x;
+            let posDoSqmY = mapaView.position.y;
+
+            //CRIA LOOP FOR PARA OS SQM
+            for (let i=0; i < totalSqms; i++){
+
+                //Cria Variavel do SQM
+                let meuSqm = new Sqm(
+                    ctx,
+                    posDoSqmX,
+                    posDoSqmY,
+                    sqmSizeX,
+                    sqmSizeY,
+                    spriteMapa,
+                    posRenderX,
+                    posRenderY,
+                    sqmSizeX,
+                    sqmSizeY,
+                    posDoSqmX,
+                    posDoSqmY,
+                    sqmSizeX,
+                    sqmSizeY
+                );
+                
+                //RENDERIZA SQM
+                meuSqm.renderiza();
+
+                //Acrescenta novo valor na posX
+                posDoSqmX += sqmSizeX;
+
+                //ZERA POSICOES NO LIMETE DO MAPA
+                let larguraDoMapaView = mapaView.size.w;
+                let gapMapaView = (innerWidth - larguraDoMapaView) / 2;
+            
+                if( posDoSqmX >= (larguraDoMapaView + gapMapaView) ){
+                    posDoSqmX = mapaView.position.x;
+                    posDoSqmY += sqmSizeY;
+                }
+            }
+        }
+ 
+        //CARREGA O GAME
+        spriteMapa.onload = function(){
+            // console.log("Carregou o Sprite");
+            startGame();
+        }
+
+
+        //********* FUNÇÕES **************//
+        //CRIA O PLAYER PRINCIPAL
+        function createPlayer(){
+            //DEFINE AS PROPRIEDADES DO PLAYER
+            let sizeSpriteW = playerSizeX;
+            let sizeSpriteH = playerSizeY;
             let areaHitX = sqmDefaultSize;
             let areaHitY = sqmDefaultSize;
             let areaHitW = sqmDefaultSize;
@@ -81,17 +167,10 @@
             let spriteRenderY = 0;
             let marginX = areaHitW/2;
             let marginY = areaHitH/2;
-
-            let margemX = innerWidth - (maxSqmX * sqmSizeX);
-            let margemY = innerHeight - (maxSqmY * sqmSizeY);
-            
-            let meioTelaX = innerWidth/2;
-            let meioTelaY = innerHeight/2;
-
+    
             //POSICIONA PLAYER NA TELA
             let positionPlayerX = (meioTelaX - sizeSpriteW) + areaHitW - marginX;
             let positionPlayerY = (meioTelaY - sizeSpriteH) + areaHitH - marginY;
-
 
             playerPrincipal = new Player(
                 ctx,
@@ -115,66 +194,13 @@
                 marginX,
                 marginY
             );
-            // console.log(playerPrincipal);
-
-            //INICIA O LOOP DO GAME
-            loopGame();
         }
-
-        //FUNÇÃO DE LOOP
-        function loopGame(){
-            ctx.clearRect(0,0,innerWidth,innerHeight);
-            sqmDraw();
-
-            //RENDERIZA O PLAYER NA TELA
-            playerPrincipal.renderiza();
-
-            centroDaTela();
-            requestAnimationFrame(loopGame);
+        //ATUALIZA CANVA SIZE
+        function atualizaCanvaSize(){
+            //REDEFINE TAMANHO DO CANVAS
+            cnv.width = innerWidth;
+            cnv.height = innerHeight;
         }
-
-        //FUNÇÃO DESENHA OS SQM
-        function sqmDraw(){
-            //VARIAL
-            let posRenderX = 0;
-            let posRenderY = 32;
-            let posDoSqmX = mapaView.position.x;
-            let posDoSqmY = mapaView.position.y;
-
-            //CRIA LOOP FOR PARA OS SQM
-            for (let i=0; i < totalSqms; i++){
-
-                ctx.save();
-                ctx.strokeStyle = "#0F0";
-                ctx.strokeRect(posDoSqmX,posDoSqmY,sqmSizeX,sqmSizeY);
-                ctx.restore();
-
-                //Cria Variavel do SQM
-                let meuSqm1 = new Sqm(ctx,posDoSqmX,posDoSqmY,sqmSizeX,sqmSizeY,spriteMapa,posRenderX,posRenderY,sqmSizeX,sqmSizeY,posDoSqmX,posDoSqmY,sqmSizeX,sqmSizeY);
-                //RENDERIZA SQM
-                meuSqm1.renderiza();
-                //Acrescenta novo valor na posX
-                posDoSqmX += sqmSizeX;
-
-                //ZERA POSICOES NO LIMETE DO MAPA
-                let larguraDoMapaView = mapaView.size.w;
-                let gapMapaView = (innerWidth - larguraDoMapaView) / 2;
-            
-                if( posDoSqmX >= (larguraDoMapaView + gapMapaView) ){
-                    posDoSqmX = mapaView.position.x;
-                    posDoSqmY += sqmSizeY;
-                }
-                
-            }
-        }
- 
-        //CARREGA O GAME
-        spriteMapa.onload = function(){
-            console.log("Carregou o Game");
-            startGame();
-        }
-
-        //FUNÇÕES//
         //ATUALIZAR POSICAO DO MAP VIEW
         function atualizaMapView() {
             //Atualiza o TAMANHO da Tela e resdesenha MAP VIEW
@@ -183,7 +209,25 @@
             mapaView.attPosition();
             mapaView.draw();
         }
+        //ATUALIZAR POSICAO PLAYER
+        function atualizaPlayer() {
+            //POSICIONA PLAYER NA TELA //Att posição Player referente a tela
+            let sizeSpriteW = playerPrincipal.render.sw;
+            let sizeSpriteH = playerPrincipal.render.sh;
+            let areaHitW = playerPrincipal.areahit.w;
+            let areaHitH = playerPrincipal.areahit.h;
+            let marginX = areaHitW/2;
+            let marginY = areaHitH/2;
+                meioTelaX = innerWidth/2;
+                meioTelaY = innerHeight/2;
 
+            let positionPlayerX = (meioTelaX - sizeSpriteW) + areaHitW - marginX;
+            let positionPlayerY = (meioTelaY - sizeSpriteH) + areaHitH - marginY;
+
+            playerPrincipal.render.px = positionPlayerX;
+            playerPrincipal.render.py = positionPlayerY;
+        }
+        //DESENHA LINHAS DE GUIA DE CENTRO DA TELA
         function centroDaTela(){
             let meioTelaHorizontal = innerHeight/2;
             let meioTelaVertical = innerWidth/2;
@@ -199,6 +243,7 @@
             ctx.lineTo(meioTelaVertical, innerHeight);
             ctx.stroke();
         }
+        //********* FIM DAS FUNÇÕES **************//
 
     </script>
 
