@@ -24,6 +24,7 @@
         //IMPORTA ARQUIVOS EXTERNOS
         import Sqm from "/js/Sqm.js";
         import Mapa from "/js/Mapa.js";
+        import Player from "/js/Player.js";
 
         const cnv = document.querySelector("#tela");
         const ctx = cnv.getContext("2d");
@@ -35,6 +36,7 @@
         //Definições Iniciais
         let sqmSizeX = 32;
         let sqmSizeY = 32;
+        let sqmDefaultSize = sqmSizeX;
 
         //Define tela Visual do Game
         let maxSqmX = 15;
@@ -54,7 +56,6 @@
 
             //Atualiza Canva e Redesenha View Port
             atualizaMapView();
-            
         })
 
 
@@ -62,9 +63,61 @@
         const spriteMapa = new Image();
               spriteMapa.src = "sprites/mapa.png";
         const spritePlayer = new Image();
-              spritePlayer.src = "sprites/player-cyc.png";
- 
+              spritePlayer.src = "sprites/player-demon.png";
+
+        //INSTANCIA O PLAYER VAZIO
+        let playerPrincipal = null;
+
         function startGame(){
+
+            //DEFINIU AS PROPRIEDADES DO PLAYER
+            let sizeSpriteW = 96;
+            let sizeSpriteH = 96;
+            let areaHitX = sqmDefaultSize;
+            let areaHitY = sqmDefaultSize;
+            let areaHitW = sqmDefaultSize;
+            let areaHitH = sqmDefaultSize;
+            let spriteRenderX = 0;
+            let spriteRenderY = 0;
+            let marginX = areaHitW/2;
+            let marginY = areaHitH/2;
+
+            let margemX = innerWidth - (maxSqmX * sqmSizeX);
+            let margemY = innerHeight - (maxSqmY * sqmSizeY);
+            
+            let meioTelaX = innerWidth/2;
+            let meioTelaY = innerHeight/2;
+
+            //POSICIONA PLAYER NA TELA
+            let positionPlayerX = (meioTelaX - sizeSpriteW) + areaHitW - marginX;
+            let positionPlayerY = (meioTelaY - sizeSpriteH) + areaHitH - marginY;
+
+
+            playerPrincipal = new Player(
+                ctx,
+                positionPlayerX,
+                positionPlayerY,
+                sizeSpriteW,
+                sizeSpriteH,
+                spritePlayer,
+                spriteRenderX,
+                spriteRenderY,
+                sizeSpriteW,
+                sizeSpriteH,
+                positionPlayerX,
+                positionPlayerY,
+                sizeSpriteW,
+                sizeSpriteH,
+                areaHitX,
+                areaHitY,
+                areaHitW,
+                areaHitH,
+                marginX,
+                marginY
+            );
+            // console.log(playerPrincipal);
+
+            //INICIA O LOOP DO GAME
             loopGame();
         }
 
@@ -72,7 +125,10 @@
         function loopGame(){
             ctx.clearRect(0,0,innerWidth,innerHeight);
             sqmDraw();
-            renderizaPlayer();
+
+            //RENDERIZA O PLAYER NA TELA
+            playerPrincipal.renderiza();
+
             centroDaTela();
             requestAnimationFrame(loopGame);
         }
@@ -143,26 +199,6 @@
             ctx.lineTo(meioTelaVertical, innerHeight);
             ctx.stroke();
         }
-
-        //RENDERIZA PLAYER
-        function renderizaPlayer(){
-            let posPlayerX = innerWidth/2 - (64/2) - (32/2);
-            let posPlayerY = innerHeight/2 - (64/2) - (32/2);
-            let sx = 0;
-            let sy = 0;
-            let sw = 64;
-            let sh = 64;
-
-            let px = posPlayerX;
-            let py = posPlayerY;
-            let pw = 64;
-            let ph = 64;
-
-            ctx.fillStyle = "#00F";
-            ctx.drawImage(spritePlayer,sx,sy,sw,sh,px,py,pw,ph);
-            // ctx.fillRect(posPlayerX,posPlayerY,64,64);
-        }
-        
 
     </script>
 
