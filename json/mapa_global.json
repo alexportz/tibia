@@ -1,0 +1,62 @@
+{
+    "Autor": "Alex Portz",
+    "Version": 1,
+    "Name": "Fury Tibia",
+    "Sqms": [
+        {
+            "id": 1,
+            "coluna": 0,
+            "linha": 0,
+            "animado": false,
+            "valocidade_animacao": 0,
+            "podeAndar": true,
+            "podeJogarItem": true,
+            "itens": [],
+            "objetosFixos": []
+        },
+        {
+            "id": 2,
+            "coluna": 0,
+            "linha": 0,
+            "animado": false,
+            "valocidade_animacao": 0,
+            "podeAndar": true,
+            "podeJogarItem": true,
+            "itens": [],
+            "objetosFixos": []
+        },
+        {
+            "id": 3,
+            "coluna": 0,
+            "linha": 0,
+            "animado": false,
+            "valocidade_animacao": 0,
+            "podeAndar": true,
+            "podeJogarItem": true,
+            "itens": [],
+            "objetosFixos": []
+        },
+        {
+            "id": 4,
+            "coluna": 0,
+            "linha": 0,
+            "animado": false,
+            "valocidade_animacao": 0,
+            "podeAndar": true,
+            "podeJogarItem": true,
+            "itens": [],
+            "objetosFixos": []
+        },
+        {
+            "id": 5,
+            "coluna": 0,
+            "linha": 0,
+            "animado": false,
+            "valocidade_animacao": 0,
+            "podeAndar": true,
+            "podeJogarItem": true,
+            "itens": [],
+            "objetosFixos": []
+        }
+    ]
+}

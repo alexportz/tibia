@@ -22,6 +22,7 @@
 
     <script type="module">
         //IMPORTA ARQUIVOS EXTERNOS
+        import SqmGlobal from "/js/SqmGlobal.js";
         import Sqm from "/js/Sqm.js";
         import Mapa from "/js/Mapa.js";
         import Player from "/js/Player.js";
@@ -73,7 +74,9 @@
         let playerPrincipal = null;
 
         function startGame(){
-            
+            //Instancia o Mapa Global
+            const mapaGlobal = getGlobalMap();
+
             //CRIA O PLAYER "Define as conf. do Player"
             createPlayer(playerPrincipal);
 
@@ -242,6 +245,14 @@
             ctx.moveTo(meioTelaVertical, 0);
             ctx.lineTo(meioTelaVertical, innerHeight);
             ctx.stroke();
+        }
+
+        //Função ASSÍNCRONA DO MAPA GLOBAL
+        async function getGlobalMap(){
+            const url = "http://127.0.0.1:5500/json/mapa_global.json";
+            const response = await fetch(url);
+            const sqms = await response.json();
+            return sqms;
         }
         //********* FIM DAS FUNÇÕES **************//
 
