@@ -1,6 +1,14 @@
-export default class Sqm {
-    constructor(contexto,x,y,w,h,sprite,sx,sy,sw,sh,px,py,pw,ph){
-        this.contexto = contexto;
+export default class Mapa {
+    constructor(ctx,x,y,w,h,sprite,sx,sy,sw,sh,px,py,pw,ph,renderSizeX,renderSizeY,colunaAtual,linhaAtual,positionMapX,positionMapY){
+        this.ctx = ctx;
+        this.renderAtual = {
+            positionMapX: positionMapX,
+            positionMapY: positionMapY,
+            renderSizeX: renderSizeX,
+            renderSizeY: renderSizeY,
+            coluna: colunaAtual,
+            linha: linhaAtual
+        };
         this.sprite = {
             img: sprite,
             x: sx,
@@ -13,8 +21,8 @@ export default class Sqm {
             ph: ph
         };
         this.position = {
-            x:x,
-            y:y
+            x: 0,
+            y: 0
         };
         this.size = {
             w:w,
@@ -24,16 +32,16 @@ export default class Sqm {
 
     //Renderiza o SQM
     renderiza(){
-        this.contexto.drawImage(
-            this.sprite.img,
-            this.sprite.x,
-            this.sprite.y,
-            this.sprite.w,
-            this.sprite.h,
-            this.sprite.px,
-            this.sprite.py,
-            this.sprite.pw,
-            this.sprite.ph
+        this.ctx.drawImage(
+        this.sprite.img,
+        this.sprite.x,
+        this.sprite.y,
+        this.sprite.w,
+        this.sprite.h,
+        this.renderAtual.positionMapX + (this.renderAtual.coluna * this.renderAtual.renderSizeX),
+        this.renderAtual.positionMapY + (this.renderAtual.linha * this.renderAtual.renderSizeY),
+        this.sprite.pw,
+        this.sprite.ph
         );
-    }
+    } 
 }
