@@ -50,24 +50,11 @@ function startGame(){
     //Cria o MapaView de Sqms
     createMapView();
 
-    //Inicia a função de Loop
-    loopGame();
-}
-
-//LOOP DO GAME
-function loopGame(){
-    //LIMPAR A TELA DO CANVA
-    limpaTelaCanvas();
-
     //Renderiza todos Sqms do MapaView
     mapaView.renderizaSqms();
 
-    //Renderizar a Borda
-    mapaView.renderizaBorda();
-
-    //Inicia o loop da propria função
-    requestAnimationFrame(loopGame);
 }
+
 
 //CARREGA O GAME
 spriteMapa.onload = function(){
@@ -119,36 +106,7 @@ function createMapView(){
             
             //FAZ O PRIMEIRO RENDER DO SQM ao Criar
             meuSqm.renderiza();
-            //Adiciona os SQM no Array dos SQMS do MapaView
-            mapaView.sqms.push(meuSqm);
         }
     }
     //**FIM DO LOOP QUE CRIA SQMS */
 }
-
-//Função Limpa Tela Canvas
-function limpaTelaCanvas(){
-    ctx.clearRect(0,0,cnv.width,cnv.height);
-}
-
-//FUNÇÃO ALTERANDO RESOLUÇÃO
-addEventListener("resize", function(){ 
-    //ATUALIZA TAMANHO DO CANVAS
-    cnv.width = innerWidth;
-    cnv.height = innerHeight;
-
-    //Atualiza as Posições da Posicao
-    posMapaViewX = (innerWidth/2) - ((sqmRenderSizeX * maxSqmX) / 2); //calculo de meio de telaX
-    posMapaViewY = (innerHeight/2) - ((sqmRenderSizeY * maxSqmY) / 2); //calculo de meio de telaY
-
-    //Atribui as novas posições para o MapaView
-    mapaView.position.x = posMapaViewX;
-    mapaView.position.y = posMapaViewY;
-
-    //ATUALIZA POSIÇÃO DO MAPA DOS SQMS RENDERIZADOS
-    mapaView.sqms.forEach( meuSqm => {
-        meuSqm.renderAtual.positionMapX = posMapaViewX;
-        meuSqm.renderAtual.positionMapY = posMapaViewY;
-    })
-
-})

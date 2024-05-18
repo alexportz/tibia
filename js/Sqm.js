@@ -1,14 +1,6 @@
 export default class Mapa {
-    constructor(ctx,x,y,w,h,sprite,sx,sy,sw,sh,px,py,pw,ph,renderSizeX,renderSizeY,colunaAtual,linhaAtual,positionMapX,positionMapY){
+    constructor(ctx,x,y,w,h,sprite,sx,sy,sw,sh,px,py,pw,ph){
         this.ctx = ctx;
-        this.renderAtual = {
-            positionMapX: positionMapX,
-            positionMapY: positionMapY,
-            renderSizeX: renderSizeX,
-            renderSizeY: renderSizeY,
-            coluna: colunaAtual,
-            linha: linhaAtual
-        };
         this.sprite = {
             img: sprite,
             x: sx,
@@ -38,8 +30,8 @@ export default class Mapa {
         this.sprite.y,
         this.sprite.w,
         this.sprite.h,
-        this.renderAtual.positionMapX + (this.renderAtual.coluna * this.renderAtual.renderSizeX),
-        this.renderAtual.positionMapY + (this.renderAtual.linha * this.renderAtual.renderSizeY),
+        this.sprite.px,
+        this.sprite.py,
         this.sprite.pw,
         this.sprite.ph
         );
