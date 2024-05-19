@@ -23,23 +23,19 @@ let maxSqmY = 11;
 //DEFINIÇÕES DO MAPA VIEW
 let todosSqms = []; //Totais de SQMs da tela em Array
 let borderColor = "#FFF";
-let posMapaViewX = (innerWidth/2) - ((sqmRenderSizeX * maxSqmX) / 2); //calculo de meio de telaX
-let posMapaViewY = (innerHeight/2) - ((sqmRenderSizeY * maxSqmY) / 2); //calculo de meio de telaY;
 
+//CRIA O MAPAVIEW (Instancia Mapa)
 let mapaView = new Mapa(
     ctx,
-    posMapaViewX,
-    posMapaViewY,
-    sqmRenderSizeX * maxSqmX,
-    sqmRenderSizeY * maxSqmY,
     sqmRenderSizeX,
     sqmRenderSizeY,
     maxSqmX,
     maxSqmY,
     borderColor,
-    todosSqms
-);
-    
+    todosSqms,
+    innerWidth,
+    innerHeight
+);    
 
 //DEFINE A SPRITE USADA
 const spriteMapa = new Image();
@@ -50,9 +46,19 @@ function startGame(){
     //Cria o MapaView de Sqms
     createMapView();
 
-    //Renderiza todos Sqms do MapaView
-    mapaView.renderizaSqms();
+    //INICIA A FUNÇÃO DE LOOP
+    loopGame();
+}
 
+//LOOPGAME
+function loopGame(){
+
+    //Exibe os Sqms do MapaView
+    mapaView.renderizaSqms();
+    mapaView.renderizaBorda();
+
+    //Chama a propria função novamente
+    requestAnimationFrame(loopGame);
 }
 
 
@@ -69,24 +75,24 @@ function createMapView(){
     //LOOP PARA CRIAR OS SQMS
     for (let i=0; i < maxSqmX; i++ ){
         for(let j=0; j < maxSqmY; j++) {
-            let posXSqm = mapaView.position.x + (i * mapaView.sqmRenderSizeX);
-            let posYSqm = mapaView.position.y + (j * mapaView.sqmRenderSizeY);
-            let posRenderSqmX = 72;
-            let posRenderSqmY = 72;
-            let renderSizeX = mapaView.sqmRenderSizeX;
-            let renderSizeY = mapaView.sqmRenderSizeY;
+            
+            let mapaViewPosX = mapaView.position.x;
+            let mapaViewPosY = mapaView.position.y;
             let colunaAtual = i;
             let linhaAtual = j;
-            let positionMapX = mapaView.position.x;
-            let positionMapY = mapaView.position.y;
+            let renderSizeX = mapaView.sqmRenderSizeX;
+            let renderSizeY = mapaView.sqmRenderSizeY;
+            
+            //CALCULO DO SQM
+            let posXSqm = mapaViewPosX + (colunaAtual * renderSizeX);
+            let posYSqm = mapaViewPosY + (linhaAtual * renderSizeY);
+            let posRenderSqmX = 72;
+            let posRenderSqmY = 72;
+
 
             //Cria variavel do SQM
             let meuSqm = new Sqm(
                 ctx,
-                posXSqm,
-                posYSqm,
-                sqmSizeX,
-                sqmSizeY,
                 spriteMapa,
                 posRenderSqmX,
                 posRenderSqmY,
@@ -96,17 +102,37 @@ function createMapView(){
                 posYSqm,
                 sqmRenderSizeX,
                 sqmRenderSizeY,
-                renderSizeX,
-                renderSizeY,
+                mapaViewPosX,
+                mapaViewPosY,
                 colunaAtual,
                 linhaAtual,
-                positionMapX,
-                positionMapY
+                renderSizeX,
+                renderSizeY
             );
-            
-            //FAZ O PRIMEIRO RENDER DO SQM ao Criar
-            meuSqm.renderiza();
+
+            //ADICIONA O SQM NO ARRAY DO MAPAVIEW
+            mapaView.sqms.push(meuSqm);
         }
     }
     //**FIM DO LOOP QUE CRIA SQMS */
 }
+
+//FUNÇÃO RESIZE DA TELA
+addEventListener("resize", function(){
+
+    //ATUALIZA TAMANHO TELA
+    mapaView.screenSize.width = innerWidth;
+    mapaView.screenSize.height = innerHeight;
+    mapaView.getPosition();
+    
+    //ATUALIZA POSICAO DO MAPAVIEW NOS SQMS
+    mapaView.sqms.forEach( sqm => {
+        sqm.renderAtual.posX = mapaView.position.x;
+        sqm.renderAtual.posY = mapaView.position.y;
+    })
+
+    //DEFINE TAMANHO DO CANVAS
+    cnv.width = innerWidth;
+    cnv.height = innerHeight;
+    
+})
