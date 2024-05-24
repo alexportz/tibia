@@ -6,5 +6,5 @@ body {
     overflow:hidden;
 }
 #tela {
-    background:#000;
+    background: url('../sprites/ui-background.png');
 }
