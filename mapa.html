@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAPA TIBIA</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+    <canvas id="tela"></canvas> 
+    <script>
+        const SCREEN_WIDTH = innerWidth;
+        const SCREEN_HEIGHT = innerHeight;
+
+        const cnv = document.querySelector("#tela");
+        const ctx = cnv.getContext("2d");
+
+        cnv.width = SCREEN_WIDTH;
+        cnv.height = SCREEN_HEIGHT;
+
+        const mapaSprite = new Image();
+              mapaSprite.src = "sprites/sprite-mapa.jpg";
+
+        mapaSprite.onload = function(){
+            console.log("Carregou SpriteMapa");
+            carregarMapaGeral();
+
+        };
+
+        //Função que cria o MapaView dos SQMS
+        function createMapView(mapa){ 
+                let atualCol = 0;
+                let atualLin = 0;
+                let limiteSqms = 5;
+                for (let i=0; i < mapa.length; i++ ){ 
+                    let col = mapa[i].renderCol;
+                    let lin = mapa[i].renderLin;
+                    let sizeRender = 45;
+                    let originalSqmSize = 72
+
+                    //CRIA SQM
+                    ctx.drawImage(
+                        mapaSprite,
+                        mapa[i].renderCol * originalSqmSize,
+                        mapa[i].renderLin * originalSqmSize,
+                        originalSqmSize,
+                        originalSqmSize,
+                        atualCol * sizeRender,
+                        atualLin * sizeRender,
+                        sizeRender,
+                        sizeRender
+                    );
+
+                    atualCol++;
+                    if(atualCol >= limiteSqms){ 
+                        atualCol = 0; 
+                        atualLin++;
+                    } 
+                }
+        }
+        
+        //FUNÇÃO DE CARREGAR O MAPA GERAL
+        async function carregarMapaGeral() {
+            try {
+                const response = await fetch('json/mapa.json');
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar o arquivo JSON: ' + response.statusText);
+                }
+                mapaGeral = await response.json();
+                // console.log(mapaGeral.sqms);
+                
+                // Chama a função instanciaPlayer após o carregamento bem-sucedido do arquivo JSON                
+                console.log("Carregou MapaGeral");
+
+                //Cria o MapaView de Sqms
+                createMapView(mapaGeral);
+
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        } 
+          
+    </script>
+</body>
+</html>
