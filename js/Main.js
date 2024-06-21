@@ -33,7 +33,11 @@ let moveN;
 let moveS;
 let moveL;
 let moveO;
-
+//Diagonais
+let moveNO;
+let moveNE;
+let moveSO;
+let moveSE;
 
 //Dados do player
 let proporcao = 2;
@@ -377,11 +381,59 @@ let movendo = false;
 function movimentar(){ 
     if(movendo){
         contador++;
-        //MOVE ESQUERDA
+
+        //MOVE DIAG. NE
+        if(linhaNow < linhaInicial && colunaNow > colunaInicial){ 
+            mapaView.sqms.forEach( sqm => { sqm.sprite.py +=velocidade; sqm.sprite.px -=velocidade;});
+            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py +=velocidade; sqmBorda.sprite.px -=velocidade;});
+            if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
+                contador = 0;
+                colunaInicial = colunaNow;
+                linhaInicial = linhaNow;
+                movendo = false;
+                createMapView();
+            }
+        } else
+        //MOVE DIAG. NO
+        if(linhaNow < linhaInicial && colunaNow < colunaInicial){ 
+            mapaView.sqms.forEach( sqm => { sqm.sprite.py +=velocidade; sqm.sprite.px +=velocidade;});
+            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py +=velocidade; sqmBorda.sprite.px +=velocidade;});
+            if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
+                contador = 0;
+                colunaInicial = colunaNow;
+                linhaInicial = linhaNow;
+                movendo = false;
+                createMapView();
+            }
+        } else
+        //MOVE DIAG. SE
+        if(linhaNow > linhaInicial && colunaNow > colunaInicial){  
+            mapaView.sqms.forEach( sqm => { sqm.sprite.py -=velocidade; sqm.sprite.px -=velocidade;});
+            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py -=velocidade; sqmBorda.sprite.px -=velocidade;});
+            if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
+                contador = 0;
+                colunaInicial = colunaNow;
+                linhaInicial = linhaNow;
+                movendo = false;
+                createMapView();
+            }
+        } else
+        //MOVE DIAG. SO
+        if(linhaNow > linhaInicial && colunaNow < colunaInicial){  
+            mapaView.sqms.forEach( sqm => { sqm.sprite.py -=velocidade; sqm.sprite.px +=velocidade;});
+            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py -=velocidade; sqmBorda.sprite.px +=velocidade;});
+            if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
+                contador = 0;
+                colunaInicial = colunaNow;
+                linhaInicial = linhaNow;
+                movendo = false;
+                createMapView();
+            }
+        } else
+        //MOVE LESTE
         if(colunaNow > colunaInicial){ 
             mapaView.sqms.forEach( sqm => { sqm.sprite.px -=velocidade; });
             mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.px -=velocidade; });
-            console.log("Movendo para Oeste");
             //CASO ATINGIU O PROX. SQM
             if(contador >= sqmRenderSizeX){
                 contador = 0;
@@ -390,11 +442,10 @@ function movimentar(){
                 createMapView();
             }
         } else
-        //MOVE DIREITA
+        //MOVE OESTE
         if(colunaNow < colunaInicial){ 
             mapaView.sqms.forEach( sqm => { sqm.sprite.px +=velocidade; });
-            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.px +=velocidade; });
-            console.log("Movendo para Leste");
+            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.px +=velocidade; });  
             //CASO ATINGIU O PROX. SQM
             if(contador >= sqmRenderSizeX){
                 contador = 0;
@@ -403,11 +454,10 @@ function movimentar(){
                 createMapView();
             }
         } else
-        //MOVE BAIXO
+        //MOVE SUL
         if(linhaNow > linhaInicial){
             mapaView.sqms.forEach( sqm => { sqm.sprite.py -=velocidade; });
-            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py -=velocidade; });
-            console.log("Movendo para Sul");
+            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py -=velocidade; }); 
             //CASO ATINGIU O PROX. SQM
             if(contador >= sqmRenderSizeY){
                 contador = 0;
@@ -416,11 +466,10 @@ function movimentar(){
                 createMapView();
             }
         } else
-        //MOVE CIMA
+        //MOVE NORT
         if(linhaNow < linhaInicial){
             mapaView.sqms.forEach( sqm => { sqm.sprite.py +=velocidade; });
-            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py +=velocidade; });
-            console.log("Movendo para Norte");
+            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py +=velocidade; }); 
             //CASO ATINGIU O PROX. SQM
             if(contador >= sqmRenderSizeY){
                 contador = 0;
@@ -441,6 +490,12 @@ function verificaObstaculos(){
     moveS = mapaView.sqms[index + maxSqmX].propriedades.podemover;
     moveL = mapaView.sqms[index + 1].propriedades.podemover;
     moveO = mapaView.sqms[index - 1].propriedades.podemover;
+
+    //Diagonais
+    moveNO = mapaView.sqms[index - maxSqmX -1].propriedades.podemover;
+    moveNE = mapaView.sqms[index - maxSqmX +1].propriedades.podemover;
+    moveSO = mapaView.sqms[index + maxSqmX -1].propriedades.podemover;
+    moveSE = mapaView.sqms[index + maxSqmX +1].propriedades.podemover;
 
 }
 
@@ -482,6 +537,40 @@ addEventListener("keydown", function(e){
             colunaNow+=1;
             movendo = true;
         }
-    }   
+    }  
+
+    //DIAGONAIS
+    //CASO MOVEU PARA NO
+    if(tecla=='KeyQ' && globalCol > 1  && globalLin > 1  && moveNO){
+        if(movendo==false){
+            linhaNow-=1;
+            colunaNow-=1;
+            movendo = true;
+        }
+    }
+    //CASO MOVEU PARA NE
+    if(tecla=='KeyE' && globalCol > 1  && globalLin < maxGlobalX  && moveNE){
+        if(movendo==false){
+            linhaNow-=1;
+            colunaNow+=1;
+            movendo = true;
+        }
+    }
+    //CASO MOVEU PARA SO
+    if(tecla=='KeyZ' && globalCol < maxGlobalY  && globalLin > 1  && moveSO){
+        if(movendo==false){
+            linhaNow+=1;
+            colunaNow-=1;
+            movendo = true;
+        }
+    }
+    //CASO MOVEU PARA SE
+    if(tecla=='KeyC' && globalCol < maxGlobalY  && globalLin < maxGlobalX  && moveSE){
+        if(movendo==false){
+            linhaNow+=1;
+            colunaNow+=1;
+            movendo = true;
+        }
+    }
 
 })

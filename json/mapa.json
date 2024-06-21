@@ -10546,7 +10546,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": true,
+                "podemover": false,
                 "arrasto": 0,
                 "podejogaritem": true
             }

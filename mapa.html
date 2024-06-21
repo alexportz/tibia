@@ -29,13 +29,14 @@
 
         //Função que cria o MapaView dos SQMS
         function createMapView(mapa){ 
+            console.log(mapa);
                 let atualCol = 0;
                 let atualLin = 0;
-                let limiteSqms = 5;
+                let limiteSqms = 45;
                 for (let i=0; i < mapa.length; i++ ){ 
                     let col = mapa[i].renderCol;
                     let lin = mapa[i].renderLin;
-                    let sizeRender = 45;
+                    let sizeRender = 25;
                     let originalSqmSize = 72
 
                     //CRIA SQM
@@ -73,7 +74,7 @@
                 console.log("Carregou MapaGeral");
 
                 //Cria o MapaView de Sqms
-                createMapView(mapaGeral);
+                createMapView(mapaGeral.sqms);
 
             } catch (error) {
                 console.error('Erro:', error);
