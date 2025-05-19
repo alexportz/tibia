@@ -41,8 +41,8 @@ let moveSE;
 
 //Dados do player
 let proporcao = 2;
-let playerSizeX = proporcao*sqmSizeX;
-let playerSizeY = proporcao*sqmSizeY;
+let playerSizeX = 64; //proporcao*sqmSizeX;
+let playerSizeY = 64; //proporcao*sqmSizeY;
 let playerRenderSizeX = proporcao*sqmRenderSizeX;
 let playerRenderSizeY = proporcao*sqmRenderSizeY;
 
@@ -55,7 +55,7 @@ const spriteMapa = new Image();
 
 //DEFINE A SPRITE DO PLAYER
 const spritePlayer = new Image();
-      spritePlayer.src = "sprites/player-cyc-ok.png";
+      spritePlayer.src = "sprites/sprite-player-motion.png";
 
 //DEFINE MAPAGERAL
 let mapaGeral;
@@ -69,6 +69,9 @@ function startGame(){
 
     //Instancia o Player
     instanciaPlayer();
+
+    //Chama as animações
+    animaSprites();
 
     //INICIA A FUNÇÃO DE LOOP
     loopGame();
@@ -94,6 +97,44 @@ function loopGame(){
 
     //Chama a propria função novamente
     requestAnimationFrame(loopGame);
+}
+
+//Variaveis para animação
+let acumulador = 0;  
+let lastTime = performance.now();
+
+//FUNÇÃO DE ANIMAÇÃO DE SPRITES
+function animaSprites(){
+    const currentTime = performance.now();
+    const deltaTime = (currentTime - lastTime) /1000;
+
+    lastTime = currentTime; //Atualiza o tempo anterior
+
+    //Adiciona o valor do deltaTime no acumulador
+    acumulador += deltaTime;
+
+    if(acumulador >= jogador.spriteAnimation.speedAnimation){
+        //Verificar se está movendo
+        if(movendo){
+            //Faz o codigo continuar a animação de movimento
+            jogador.spriteAnimation.atualFrameX += jogador.spriteAnimation.gapFrame;
+
+            //Verifica se passou do limite da Sprite
+            if(jogador.spriteAnimation.atualFrameX >= jogador.spriteAnimation.maxFrames){
+                jogador.spriteAnimation.atualFrameX = jogador.spriteAnimation.defaultFrameX + jogador.spriteAnimation.gapFrame;
+            }
+
+        } else {
+            //Definir o sprite parado como padrão
+            jogador.spriteAnimation.atualFrameX = jogador.spriteAnimation.defaultFrameX;
+        }
+
+        //Zera o acumulador
+        acumulador = 0;
+    }
+
+    //Chama o loop de AnimationFrame
+    requestAnimationFrame(animaSprites);
 }
 
 
@@ -378,6 +419,7 @@ async function carregarMapaGeral(){
 let contador = 0;
 let velocidade = 1;
 let movendo = false;
+
 function movimentar(){ 
     if(movendo){
         contador++;
@@ -512,6 +554,15 @@ addEventListener("keydown", function(e){
 
     //SE MOVEU PARA CIMA
     if(tecla=='KeyW' && globalCol > 1 && moveN){
+        //VERIFICA SE A DIREÇÃO ATUAL É DIFERENTE DA NOVA DIREÇÃO
+        if(jogador.spriteAnimation.atualDirection !== "N" && !movendo){
+            //Define a nova Direção
+            jogador.spriteAnimation.atualDirection = "N";
+            //Define os valores para X e Y do render
+            jogador.spriteAnimation.defaultFrameX = 0;
+            jogador.spriteAnimation.atualFrameX = 0;
+        }
+        
         if(movendo==false){
             linhaNow-=1;
             movendo = true;
@@ -519,6 +570,15 @@ addEventListener("keydown", function(e){
     }
     //SE MOVEU PARA BAIXO
     if(tecla=='KeyS' && globalCol < maxGlobalY && moveS){
+        //VERIFICA SE A DIREÇÃO ATUAL É DIFERENTE DA NOVA DIREÇÃO
+        if(jogador.spriteAnimation.atualDirection !== "S" && !movendo){
+            //Define a nova Direção
+            jogador.spriteAnimation.atualDirection = "S";
+            //Define os valores para X e Y do render
+            jogador.spriteAnimation.defaultFrameX = 2;
+            jogador.spriteAnimation.atualFrameX = 2;
+        }
+
         if(movendo==false){
             linhaNow+=1;
             movendo = true;
@@ -526,6 +586,15 @@ addEventListener("keydown", function(e){
     }
     //SE MOVEU PARA ESQ.
     if(tecla=='KeyA' && globalLin > 1 && moveO){
+        //VERIFICA SE A DIREÇÃO ATUAL É DIFERENTE DA NOVA DIREÇÃO
+        if(jogador.spriteAnimation.atualDirection !== "O" && !movendo){
+            //Define a nova Direção
+            jogador.spriteAnimation.atualDirection = "O";
+            //Define os valores para X e Y do render
+            jogador.spriteAnimation.defaultFrameX = 3;
+            jogador.spriteAnimation.atualFrameX = 3;
+        }
+
         if(movendo==false){
             colunaNow-=1;
             movendo = true;
@@ -533,6 +602,15 @@ addEventListener("keydown", function(e){
     }
     //SE MOVEU PARA DIR.
     if(tecla=='KeyD' && globalLin < maxGlobalX && moveL){
+        //VERIFICA SE A DIREÇÃO ATUAL É DIFERENTE DA NOVA DIREÇÃO
+        if(jogador.spriteAnimation.atualDirection !== "L" && !movendo){
+            //Define a nova Direção
+            jogador.spriteAnimation.atualDirection = "L";
+            //Define os valores para X e Y do render
+            jogador.spriteAnimation.defaultFrameX = 1;
+            jogador.spriteAnimation.atualFrameX = 1;
+        }
+
         if(movendo==false){
             colunaNow+=1;
             movendo = true;
@@ -542,6 +620,15 @@ addEventListener("keydown", function(e){
     //DIAGONAIS
     //CASO MOVEU PARA NO
     if(tecla=='KeyQ' && globalCol > 1  && globalLin > 1  && moveNO){
+        //VERIFICA SE A DIREÇÃO ATUAL É DIFERENTE DA NOVA DIREÇÃO
+        if(jogador.spriteAnimation.atualDirection !== "NO" && !movendo){
+            //Define a nova Direção
+            jogador.spriteAnimation.atualDirection = "NO";
+            //Define os valores para X e Y do render
+            jogador.spriteAnimation.defaultFrameX = 3;
+            jogador.spriteAnimation.atualFrameX = 3;
+        }
+
         if(movendo==false){
             linhaNow-=1;
             colunaNow-=1;
@@ -550,6 +637,15 @@ addEventListener("keydown", function(e){
     }
     //CASO MOVEU PARA NE
     if(tecla=='KeyE' && globalCol > 1  && globalLin < maxGlobalX  && moveNE){
+        //VERIFICA SE A DIREÇÃO ATUAL É DIFERENTE DA NOVA DIREÇÃO
+        if(jogador.spriteAnimation.atualDirection !== "NE" && !movendo){
+            //Define a nova Direção
+            jogador.spriteAnimation.atualDirection = "NE";
+            //Define os valores para X e Y do render
+            jogador.spriteAnimation.defaultFrameX = 1;
+            jogador.spriteAnimation.atualFrameX = 1;
+        }
+
         if(movendo==false){
             linhaNow-=1;
             colunaNow+=1;
@@ -558,6 +654,15 @@ addEventListener("keydown", function(e){
     }
     //CASO MOVEU PARA SO
     if(tecla=='KeyZ' && globalCol < maxGlobalY  && globalLin > 1  && moveSO){
+        //VERIFICA SE A DIREÇÃO ATUAL É DIFERENTE DA NOVA DIREÇÃO
+        if(jogador.spriteAnimation.atualDirection !== "SO" && !movendo){
+            //Define a nova Direção
+            jogador.spriteAnimation.atualDirection = "SO";
+            //Define os valores para X e Y do render
+            jogador.spriteAnimation.defaultFrameX = 3;
+            jogador.spriteAnimation.atualFrameX = 3;
+        }
+
         if(movendo==false){
             linhaNow+=1;
             colunaNow-=1;
@@ -565,7 +670,16 @@ addEventListener("keydown", function(e){
         }
     }
     //CASO MOVEU PARA SE
-    if(tecla=='KeyC' && globalCol < maxGlobalY  && globalLin < maxGlobalX  && moveSE){
+    if(tecla=='KeyX' && globalCol < maxGlobalY  && globalLin < maxGlobalX  && moveSE){
+        //VERIFICA SE A DIREÇÃO ATUAL É DIFERENTE DA NOVA DIREÇÃO
+        if(jogador.spriteAnimation.atualDirection !== "SE" && !movendo){
+            //Define a nova Direção
+            jogador.spriteAnimation.atualDirection = "SE";
+            //Define os valores para X e Y do render
+            jogador.spriteAnimation.defaultFrameX = 1;
+            jogador.spriteAnimation.atualFrameX = 1;
+        }
+
         if(movendo==false){
             linhaNow+=1;
             colunaNow+=1;

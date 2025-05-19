@@ -12,14 +12,25 @@ export default class Player {
             pw: pw,
             ph: ph
         };
+
+        this.spriteAnimation = {
+            atualDirection: "S", //Define a direção atual do Player
+            defaultFrameX: 2, //Define a posição padrão do render x
+            defaultFrameY: 0, //Define a posição padrão do render y
+            atualFrameX: 2, //Salva a posição atual do RenderX
+            atualFrameY: 0, //Salva a posição atual do RenderY
+            gapFrame:4, //Define a cada qnts sprites devemos pular para cada render
+            speedAnimation: 0.2, //Define a velocidade de animação
+            maxFrames: 12 //Define o nro total maximo de players no sprite animação
+        }
     }
     
     //FUNÇÃO DE RENDERIZAR O PLAYER
     renderiza(){
         this.ctx.drawImage(
             this.render.img,
-            this.render.sx,
-            this.render.sy,
+            this.spriteAnimation.atualFrameX * this.render.sw,
+            this.spriteAnimation.atualFrameY * this.render.sh,
             this.render.sw,
             this.render.sh,
             this.render.px,
