@@ -14,8 +14,8 @@ cnv.height = innerHeight;
 //Definições Iniciais
 let sqmSizeX = 72; //Tamanho do Sqm da Sprite OriginalX
 let sqmSizeY = 72; //Tamanho do Sqm da Sprite OriginalY
-let sqmRenderSizeX = 45; //Tamanho do Render SqmX na tela
-let sqmRenderSizeY = 45; //Tamanho do Render SqmX na tela
+let sqmRenderSizeX = 72; //Tamanho do Render SqmX na tela
+let sqmRenderSizeY = 72; //Tamanho do Render SqmX na tela
 
 //Define tela Visual do Game
 let maxSqmX = 15;
@@ -51,11 +51,11 @@ let todosSqms = []; //Totais de SQMs da tela em Array
 
 //DEFINE A SPRITE DO MAPA
 const spriteMapa = new Image();
-        spriteMapa.src = "sprites/sprite-mapa.jpg";
+        spriteMapa.src = "sprites/mapa/sprite-mapa.jpg";
 
 //DEFINE A SPRITE DO PLAYER
 const spritePlayer = new Image();
-      spritePlayer.src = "sprites/sprite-player-motion.png";
+      spritePlayer.src = "sprites/player/sprite-player-knight.png";
 
 //DEFINE MAPAGERAL
 let mapaGeral;
@@ -399,7 +399,7 @@ function instanciaSqm(geralCol,geralLin,mvCol,mvLin,direcional){
 //FUNÇÃO DE CARREGAR O MAPA GERAL
 async function carregarMapaGeral(){
     try {
-        const response = await fetch('json/mapa.json');
+        const response = await fetch('json/mapa_objetos_alterados_randomizado.json');
         if(!response.ok){
            throw new Error("Erro ao carregar o Mapa"); 
         }
