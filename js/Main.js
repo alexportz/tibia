@@ -399,7 +399,7 @@ function instanciaSqm(geralCol,geralLin,mvCol,mvLin,direcional){
 //FUNÇÃO DE CARREGAR O MAPA GERAL
 async function carregarMapaGeral(){
     try {
-        const response = await fetch('json/mapa_objetos_alterados_randomizado.json');
+        const response = await fetch('json/mapa.json');
         if(!response.ok){
            throw new Error("Erro ao carregar o Mapa"); 
         }
