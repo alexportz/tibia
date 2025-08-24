@@ -1148,8 +1148,8 @@
             "sqmCol": 1,
             "sqmLin": 9,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -1159,7 +1159,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -2156,7 +2156,7 @@
             "sqmCol": 2,
             "sqmLin": 12,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -2167,7 +2167,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -2996,7 +2996,7 @@
             "sqmCol": 3,
             "sqmLin": 7,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -3007,7 +3007,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -3899,8 +3899,8 @@
             "sqmCol": 4,
             "sqmLin": 5,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -3910,7 +3910,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -4067,7 +4067,7 @@
             "sqmCol": 4,
             "sqmLin": 13,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -4078,7 +4078,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -4172,7 +4172,7 @@
             "sqmCol": 4,
             "sqmLin": 18,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -4183,7 +4183,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -4949,8 +4949,8 @@
             "sqmCol": 5,
             "sqmLin": 10,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -4960,7 +4960,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -5789,7 +5789,7 @@
             "sqmCol": 6,
             "sqmLin": 5,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -5800,7 +5800,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -6755,7 +6755,7 @@
             "sqmCol": 7,
             "sqmLin": 6,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -6766,7 +6766,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -7007,8 +7007,8 @@
             "sqmCol": 7,
             "sqmLin": 18,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -7018,7 +7018,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -7826,7 +7826,7 @@
             "sqmCol": 8,
             "sqmLin": 12,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -7837,7 +7837,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -8750,7 +8750,7 @@
             "sqmCol": 9,
             "sqmLin": 11,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -8761,7 +8761,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -9065,8 +9065,8 @@
             "sqmCol": 9,
             "sqmLin": 26,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -9076,7 +9076,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -9821,7 +9821,7 @@
             "sqmCol": 10,
             "sqmLin": 17,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -9832,7 +9832,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -10493,7 +10493,7 @@
             "sqmCol": 11,
             "sqmLin": 4,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -10504,7 +10504,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -10703,8 +10703,8 @@
             "sqmCol": 11,
             "sqmLin": 14,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -10714,7 +10714,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -10997,7 +10997,7 @@
             "sqmCol": 11,
             "sqmLin": 28,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -11008,7 +11008,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -11669,7 +11669,7 @@
             "sqmCol": 12,
             "sqmLin": 15,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -11680,7 +11680,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -12446,8 +12446,8 @@
             "sqmCol": 13,
             "sqmLin": 7,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -12457,7 +12457,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -12635,7 +12635,7 @@
             "sqmCol": 13,
             "sqmLin": 16,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -12646,7 +12646,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -12908,7 +12908,7 @@
             "sqmCol": 13,
             "sqmLin": 29,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -12919,7 +12919,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -13517,8 +13517,8 @@
             "sqmCol": 14,
             "sqmLin": 13,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -13528,7 +13528,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -13685,7 +13685,7 @@
             "sqmCol": 14,
             "sqmLin": 21,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -13696,7 +13696,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -14483,7 +14483,7 @@
             "sqmCol": 15,
             "sqmLin": 14,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -14494,7 +14494,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -15386,8 +15386,8 @@
             "sqmCol": 16,
             "sqmLin": 12,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -15397,7 +15397,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -16457,7 +16457,7 @@
             "sqmCol": 17,
             "sqmLin": 18,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -16468,7 +16468,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -16646,7 +16646,7 @@
             "sqmCol": 17,
             "sqmLin": 27,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -16657,7 +16657,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -16856,8 +16856,8 @@
             "sqmCol": 17,
             "sqmLin": 37,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -16867,7 +16867,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -17423,7 +17423,7 @@
             "sqmCol": 18,
             "sqmLin": 19,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -17434,7 +17434,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -17570,7 +17570,7 @@
             "sqmCol": 18,
             "sqmLin": 26,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -17581,7 +17581,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -18347,8 +18347,8 @@
             "sqmCol": 19,
             "sqmLin": 18,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -18358,7 +18358,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -18620,7 +18620,7 @@
             "sqmCol": 19,
             "sqmLin": 31,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -18631,7 +18631,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -18767,7 +18767,7 @@
             "sqmCol": 19,
             "sqmLin": 38,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -18778,7 +18778,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -19502,8 +19502,8 @@
             "sqmCol": 20,
             "sqmLin": 28,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -19513,7 +19513,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -19691,7 +19691,7 @@
             "sqmCol": 20,
             "sqmLin": 37,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -19702,7 +19702,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -20426,7 +20426,7 @@
             "sqmCol": 21,
             "sqmLin": 27,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -20437,7 +20437,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -20594,8 +20594,8 @@
             "sqmCol": 21,
             "sqmLin": 35,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -20605,7 +20605,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -21329,7 +21329,7 @@
             "sqmCol": 22,
             "sqmLin": 25,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -21340,7 +21340,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -21602,7 +21602,7 @@
             "sqmCol": 22,
             "sqmLin": 38,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -21613,7 +21613,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -22106,8 +22106,8 @@
             "sqmCol": 23,
             "sqmLin": 17,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -22117,7 +22117,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -22358,7 +22358,7 @@
             "sqmCol": 23,
             "sqmLin": 29,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -22369,7 +22369,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -23198,7 +23198,7 @@
             "sqmCol": 24,
             "sqmLin": 24,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -23209,7 +23209,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -23471,8 +23471,8 @@
             "sqmCol": 24,
             "sqmLin": 37,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -23482,7 +23482,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -24395,7 +24395,7 @@
             "sqmCol": 25,
             "sqmLin": 36,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -24406,7 +24406,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -26075,7 +26075,7 @@
             "sqmCol": 27,
             "sqmLin": 26,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -26086,7 +26086,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -26306,8 +26306,8 @@
             "sqmCol": 27,
             "sqmLin": 37,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -26317,7 +26317,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -27104,7 +27104,7 @@
             "sqmCol": 28,
             "sqmLin": 30,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -27115,7 +27115,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -27209,7 +27209,7 @@
             "sqmCol": 28,
             "sqmLin": 35,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -27220,7 +27220,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -27986,8 +27986,8 @@
             "sqmCol": 29,
             "sqmLin": 27,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -27997,7 +27997,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -28133,7 +28133,7 @@
             "sqmCol": 29,
             "sqmLin": 34,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -28144,7 +28144,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -29057,7 +29057,7 @@
             "sqmCol": 30,
             "sqmLin": 33,
             "nivel": 0,
-            "renderCol": 6,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -29068,7 +29068,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -29204,8 +29204,8 @@
             "sqmCol": 30,
             "sqmLin": 40,
             "nivel": 0,
-            "renderCol": 6,
-            "renderLin": 0,
+            "renderCol": 1,
+            "renderLin": 1,
             "itens": [
                 "item1",
                 "item2"
@@ -29215,7 +29215,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
@@ -30128,7 +30128,7 @@
             "sqmCol": 31,
             "sqmLin": 39,
             "nivel": 0,
-            "renderCol": 7,
+            "renderCol": 1,
             "renderLin": 1,
             "itens": [
                 "item1",
@@ -30139,7 +30139,7 @@
                 "cenario2"
             ],
             "propriedades": {
-                "podemover": false,
+                "podemover": true,
                 "arrasto": 0,
                 "podejogaritem": true
             }
