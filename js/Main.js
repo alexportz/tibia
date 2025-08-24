@@ -735,9 +735,32 @@ function retornaIndexSqmGlobal(sqmGlobal){
 }
 //Fim dos Algoritmos auxiliares
 
+function verificaVizinhos(indexDoSqmGlobal){
+
+    let totalSqmsHorizontaisNoMapaGlobal = mapaGeral.info.renderSizeX;
+    console.log(totalSqmsHorizontaisNoMapaGlobal);
+
+    //Retorna os sqms vizinhos
+    let sqmNO = mapaGeral.sqms[indexDoSqmGlobal - (totalSqmsHorizontaisNoMapaGlobal + 1)];
+    let sqmN = mapaGeral.sqms[indexDoSqmGlobal - totalSqmsHorizontaisNoMapaGlobal];
+    let sqmNE = mapaGeral.sqms[indexDoSqmGlobal - (totalSqmsHorizontaisNoMapaGlobal - 1)];
+    let sqmO = mapaGeral.sqms[indexDoSqmGlobal - 1];
+    let sqmActual = mapaGeral.sqms[indexDoSqmGlobal];
+    let sqmL = mapaGeral.sqms[indexDoSqmGlobal + 1];
+    let sqmSO = mapaGeral.sqms[indexDoSqmGlobal + (totalSqmsHorizontaisNoMapaGlobal - 1)];
+    let sqmS = mapaGeral.sqms[indexDoSqmGlobal + totalSqmsHorizontaisNoMapaGlobal];
+    let sqmSE = mapaGeral.sqms[indexDoSqmGlobal + (totalSqmsHorizontaisNoMapaGlobal + 1)];
+
+    //RETORNA OS IDS DOS SQMS NAS BORDAS
+    console.log(sqmNO.id, sqmN.id, sqmNE.id);
+    console.log(sqmO.id, sqmActual.id, sqmL.id);
+    console.log(sqmSO.id, sqmS.id, sqmSE.id);
+}
 //Algoritmo de retornar melhor caminho
-function retornaMelhorCaminho(sqmGlobal){
-    let indexSqmGlobal = retornaIndexSqmGlobal(sqmGlobal);
+function retornaMelhorCaminho(sqmInicial){
+    let indexSqmGlobal = retornaIndexSqmGlobal(sqmInicial);
+
+    let sqmVerificado = verificaVizinhos(indexSqmGlobal)
 }
 
 addEventListener("mousedown", function(e){
@@ -752,6 +775,9 @@ addEventListener("mousedown", function(e){
 
     //INICIA A BUSCA DO MELHOR CAMINHO
     let caminhoFinal = retornaMelhorCaminho(sqmGlobalDoPlayer); 
+
+    let caminhoFinal2 = verificaVizinhos(retornaIndexSqmGlobal(sqmGlobalClicado)); 
+
 
     // console.log(indexSqmLocalDoPlayer);
     // console.log(sqmGlobalDoPlayer);
