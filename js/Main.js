@@ -2,6 +2,7 @@
 import Sqm from "./Sqm.js";
 import Mapa from "./Mapa.js";
 import Player from "./Player.js";
+import Bloco from "./Bloco.js";
 
 //CANVAS
 const cnv = document.querySelector("#tela");
@@ -92,8 +93,14 @@ function loopGame(){
     //MOVIMENTAÇÃO
     movimentar();
 
+    //Desenha os SQMS da lista de SQMs listaDeSqmsGerais
+    marcaSqmsGerais();
+
+    //Desenha os SQMS da lista de SQMs listaDeSqmsPossiveis
+    marcaSqmsPossiveis();
+
     //ExibeMeio da Tela
-    //exibeMeioTela();
+    // exibeMeioTela();
 
     //Chama a propria função novamente
     requestAnimationFrame(loopGame);
@@ -319,7 +326,7 @@ function exibeMeioTela(){
         ctx.strokeStyle = "#F00";
         ctx.beginPath();
         ctx.moveTo(0,innerHeight/2);
-        ctx.lineTo(innerWidth, innewrHeight/2);
+        ctx.lineTo(innerWidth, innerHeight/2);
         ctx.stroke();
 
         ctx.beginPath();
@@ -723,22 +730,106 @@ function retornaIndexLocalSqmClicado(mousePosX, mousePosY){
 }
 
 function defineCaminhoDoJogador(sqmInicio, sqmFim){
-    jogador.caminho.sqmInicio = sqmInicio;
-    jogador.caminho.sqmFim = sqmFim;
-    jogador.caminho.sqmOrigem = sqmInicio;
-    jogador.caminho.sqmDestino = sqmFim;
+    jogador.caminho.sqmInicio = mapaGeral.sqms[retornaIndexSqmGlobal(sqmInicio)];
+    jogador.caminho.sqmFim = mapaGeral.sqms[retornaIndexSqmGlobal(sqmFim)];
+    jogador.caminho.sqmOrigem = mapaGeral.sqms[retornaIndexSqmGlobal(sqmInicio)];
+    jogador.caminho.sqmDestino = mapaGeral.sqms[retornaIndexSqmGlobal(sqmFim)];
 }
 function retornaIndexSqmGlobal(sqmGlobal){
     let indexSqmGlobal = mapaGeral.sqms.findIndex(obj => obj.id === sqmGlobal.id);
-    console.log(indexSqmGlobal);
     return indexSqmGlobal;
+}
+function retornaDistanciaInicial(sqmAtual, sqmInicio){
+    let diffColuna = sqmAtual.sqmCol - sqmInicio.sqmCol;
+    let diffLinha = sqmAtual.sqmLin - sqmInicio.sqmLin; 
+    return Math.abs(diffColuna) + Math.abs(diffLinha);
+}
+function retornaDistanciaFinal(sqmAtual, sqmFim){
+    let diffColuna = sqmAtual.sqmCol - sqmFim.sqmCol;
+    let diffLinha = sqmAtual.sqmLin - sqmFim.sqmLin; 
+    return Math.abs(diffColuna) + Math.abs(diffLinha);
+}
+function verificaListaGeral(sqm){
+    return jogador.caminho.listaDeSqmsGerais.some(sqmGerais => sqmGerais.sqm.id === sqm.id);
+}
+function verificaListaSqmsPossiveis(sqm){
+    return jogador.caminho.listaDeSqmsPossiveis.some(sqmVerificado => sqmVerificado.sqm.id === sqm.id);
+}
+function marcaSqmsGerais(){
+    jogador.caminho.listaDeSqmsGerais.forEach(bloco => { 
+        let sqmAtualGlobal = bloco.sqm;
+        // console.log("GLOBAL", sqmAtualGlobal);
+        // console.log(sqmAtualGlobal.sqmCol, sqmAtualGlobal.sqmLin);
+        let sqmAtualLocal = mapaView.sqms.find(sqm => sqm.geralInfos.coluna === sqmAtualGlobal.sqmCol && sqm.geralInfos.linha === sqmAtualGlobal.sqmLin);
+        if(sqmAtualLocal){
+            // console.log("LOCAL", sqmAtualLocal)
+            ctx.fillStyle = "rgba(241, 6, 6, 0.59)";
+            ctx.fillRect(sqmAtualLocal.sprite.px, sqmAtualLocal.sprite.py, sqmAtualLocal.sprite.pw, sqmAtualLocal.sprite.ph);
+        }
+    });
+}
+function marcaSqmsPossiveis(){
+    jogador.caminho.listaDeSqmsPossiveis.forEach(bloco => { 
+        let sqmAtualGlobal = bloco.sqm;
+        // console.log("GLOBAL", sqmAtualGlobal);
+        // console.log(sqmAtualGlobal.sqmCol, sqmAtualGlobal.sqmLin);
+        let sqmAtualLocal = mapaView.sqms.find(sqm => sqm.geralInfos.coluna === sqmAtualGlobal.sqmCol && sqm.geralInfos.linha === sqmAtualGlobal.sqmLin);
+        
+        if(sqmAtualLocal){
+            // console.log("LOCAL", sqmAtualLocal)
+            ctx.fillStyle = "rgba(117, 247, 31, 0.62)";
+            ctx.fillRect(sqmAtualLocal.sprite.px, sqmAtualLocal.sprite.py, sqmAtualLocal.sprite.pw, sqmAtualLocal.sprite.ph);
+            ctx.font = "10px Arial";
+            ctx.fillStyle = "blue";
+            ctx.fillText(sqmAtualLocal.id, sqmAtualLocal.sprite.px + 20, sqmAtualLocal.sprite.py + 20);
+            ctx.fillStyle = "black";
+            ctx.fillText(bloco.sqmPai.id, sqmAtualLocal.sprite.px + 20, sqmAtualLocal.sprite.py + 40);
+        }
+    });
+}
+function defineCaminhoFinal(){
+    let caminhoCompleto = false;
+    // console.log("Caminho final");
+    // console.log(jogador.caminho.listaDeSqmsPossiveis);
+
+    let blocoVerificado = jogador.caminho.listaDeSqmsPossiveis.find(bloco => bloco.tipoDeBloco === "destino");
+    // console.log("Bloco Destino", blocoVerificado);
+
+    while(!caminhoCompleto){
+
+        //Faz loop na lista SqmsPossiveis pegando o Bloco destino e retornando o caminho
+        jogador.caminho.caminhoFinal.push(blocoVerificado.sqm);
+
+        //Caso o bloco verificado seja igual a origem, finaliza o caminho
+        if(blocoVerificado.sqm.id === jogador.caminho.sqmOrigem.id){
+            caminhoCompleto = true;
+            console.log("Caminho completo");
+            console.log(jogador.caminho.caminhoFinal);
+        }
+
+        //Retorna o bloco do sqmPai do blocoVerificado
+        blocoVerificado = jogador.caminho.listaDeSqmsPossiveis.find(bloco => bloco.sqm.id === blocoVerificado.sqmPai.id);
+
+        //Atualiza o bloco verificado
+        // console.log("NOVO SQM PAI:", blocoVerificado);
+    }
+    
+}
+function limpaCaminhos(){
+    jogador.caminho.listaDeSqmsGerais = [];
+    jogador.caminho.listaDeSqmsPossiveis = [];
+    jogador.caminho.caminhoFinal = [];
+    jogador.caminho.sqmInicio = null;
+    jogador.caminho.sqmFim = null;
+    jogador.caminho.sqmOrigem = null;
+    jogador.caminho.sqmDestino = null;
+    jogador.caminho.sqmProvavel = null;
 }
 //Fim dos Algoritmos auxiliares
 
 function verificaVizinhos(indexDoSqmGlobal){
-
+    let encontrouDestino = false;
     let totalSqmsHorizontaisNoMapaGlobal = mapaGeral.info.renderSizeX;
-    console.log(totalSqmsHorizontaisNoMapaGlobal);
 
     //Retorna os sqms vizinhos
     let sqmNO = mapaGeral.sqms[indexDoSqmGlobal - (totalSqmsHorizontaisNoMapaGlobal + 1)];
@@ -751,32 +842,137 @@ function verificaVizinhos(indexDoSqmGlobal){
     let sqmS = mapaGeral.sqms[indexDoSqmGlobal + totalSqmsHorizontaisNoMapaGlobal];
     let sqmSE = mapaGeral.sqms[indexDoSqmGlobal + (totalSqmsHorizontaisNoMapaGlobal + 1)];
 
+    //Lista de vizinhos
+    let listaVizinhos = [sqmNO, sqmN, sqmNE, sqmO, sqmActual, sqmL, sqmSO, sqmS, sqmSE];
+    let listaVizinhosDiagonais = [sqmNO, sqmNE, sqmSO, sqmSE];
+
     //RETORNA OS IDS DOS SQMS NAS BORDAS
-    console.log(sqmNO.id, sqmN.id, sqmNE.id);
-    console.log(sqmO.id, sqmActual.id, sqmL.id);
-    console.log(sqmSO.id, sqmS.id, sqmSE.id);
+    // console.log(sqmNO.id, sqmN.id, sqmNE.id);
+    // console.log(sqmO.id, sqmActual.id, sqmL.id);
+    // console.log(sqmSO.id, sqmS.id, sqmSE.id);
+ 
+    // console.log("SQMATUAL", sqmActual);
+    // Cria os blocos para cada sqm vizinho
+    listaVizinhos.forEach(sqm => {
+        if(!encontrouDestino){
+            // console.log("Analise do sqm: ", sqm.id);
+
+            //Verifica se o sqm possui obstaculos e pula ele
+            if(sqm.propriedades.podemover == false) { 
+                // console.log("Pulou o sqm ", sqm.id, " tem obstáculo") 
+            } else {
+                // console.log("Sqm ", sqm.id, " não tem obstáculo");
+            };
+            if(sqm.propriedades.podemover == false) return;
+
+            //Verifica se o sqm já foi adicionado na lista de SqmsGerais
+            let estaNaListaGeral = verificaListaGeral(sqm);
+            // console.log('Sqm ', sqm.id, ' não está na Lista Geral')
+            if(estaNaListaGeral) return;
+
+            //Verifica se o sqm já foi adicionado na lista de SqmsVerificados
+            let estaNaListaSqmsVerificados = verificaListaSqmsPossiveis(sqm);
+            // console.log('Sqm ', sqm.id, ' não está na Lista de Sqms Possíveis')
+            if(estaNaListaSqmsVerificados) return;
+
+            //Define os calculos e pesos
+            let distanciaInicial = retornaDistanciaInicial(sqm, jogador.caminho.sqmInicio);
+            let distanciaFinal = retornaDistanciaFinal(sqm, jogador.caminho.sqmDestino);
+            let pesoDoMovimento = (listaVizinhosDiagonais.includes(sqm)) ? 10 : 10;
+            let sqmPai = sqmActual;
+            let indicador = distanciaInicial + distanciaFinal + pesoDoMovimento;
+
+            //Cria o bloco
+            let bloco = new Bloco(
+                sqm,
+                sqmPai,
+                distanciaInicial,
+                distanciaFinal,
+                pesoDoMovimento,
+                indicador
+            ); 
+
+            // Adiciona o bloco à lista de SQMs gerais
+            // console.log("Sqm ", sqm.id, " adicionado à lista de SQMs gerais");
+            jogador.caminho.listaDeSqmsGerais.push(bloco);
+
+            //Ordena a lista de blocos pelo indicador (menor para maior)
+            jogador.caminho.listaDeSqmsGerais.sort((a, b) => a.indicador - b.indicador);
+
+        }
+    });
+
+    //PASSOU POR TODA LISTA AO REDOR DO SQM PROVAVEL E ENCONTROU O MAIS PROVAVEL
+    //SQM PARA REMOVER DA LISTA (O MAIS PROVAVEL)
+    // console.log("SQM PARA REMOVER: ", jogador.caminho.listaDeSqmsGerais[0].sqm);
+    
+    //REGISTRA O SQM PAI DO SQM PROVAVEL
+    if(jogador.caminho.listaDeSqmsGerais[0].sqmPai == null){
+        jogador.caminho.listaDeSqmsGerais[0].sqmPai = sqmActual;
+        // console.log("SQM ATUAL E PAI AGORA", sqmActual);
+    }
+    
+    // console.log("SQM REVIEW: ", jogador.caminho.listaDeSqmsGerais[0]);
+
+    // ADICIONA O SQM MAIS PROVAVEL NA LISTA DOS POSSIVEIS Antes de remove-lo
+    jogador.caminho.listaDeSqmsPossiveis.push(jogador.caminho.listaDeSqmsGerais[0]);
+    
+    //Define o primeiro bloco como o verificado
+    jogador.caminho.sqmVerificado = jogador.caminho.listaDeSqmsGerais[0].sqm;
+    // console.log("SQM VERIFICADO: ", jogador.caminho.sqmVerificado);
+
+    //Altera o Label do tipo de BLOCO
+     if(jogador.caminho.sqmVerificado.id == jogador.caminho.sqmDestino.id){
+        jogador.caminho.listaDeSqmsGerais[0].tipoDeBloco = "destino";
+     }
+
+    //Remove o bloco da lista de SQMs gerais
+    jogador.caminho.listaDeSqmsGerais.shift();
+    
+    //RETORNA A LISTA FINAL GERAL APÓS REMOVIDO O SQM PROVAVEL
+    // console.log(jogador.caminho.listaDeSqmsGerais);
+
+    //Verifica se o sqmAtual é o destino
+    // console.log(jogador.caminho.sqmVerificado.id, jogador.caminho.sqmDestino.id);
+    if(jogador.caminho.sqmVerificado.id == jogador.caminho.sqmDestino.id){
+        encontrouDestino = true;
+        console.log("# # # Chegou ao destino # # #");
+        //Define o tipo de bloco como destino
+        defineCaminhoFinal(); 
+    } else {
+        // console.log("Sqm ", jogador.caminho.sqmVerificado.id, " não é o destino");
+        //Chama novamente a função com Index do SQM mais provável
+        verificaVizinhos(retornaIndexSqmGlobal(jogador.caminho.sqmVerificado));
+    }
 }
 //Algoritmo de retornar melhor caminho
 function retornaMelhorCaminho(sqmInicial){
-    let indexSqmGlobal = retornaIndexSqmGlobal(sqmInicial);
-
+    let indexSqmGlobal = retornaIndexSqmGlobal(sqmInicial); 
     let sqmVerificado = verificaVizinhos(indexSqmGlobal)
 }
 
 addEventListener("mousedown", function(e){
+    limpaCaminhos();
     let indexSqmLocalDoPlayer = retornaIndexLocalDoPlayer();
     let indexSqmLocalClicado = retornaIndexLocalSqmClicado(e.clientX, e.clientY);
 
     let sqmGlobalDoPlayer = retornaSqmGlobalViaSqmLocal(indexSqmLocalDoPlayer);
     let sqmGlobalClicado = retornaSqmGlobalViaSqmLocal(indexSqmLocalClicado);
 
+    //Verifica se sqm clicado não é obstáculo
+    if (sqmGlobalClicado.propriedades.podemover == false) {
+        return;
+    }
+
     //Salva as informações do SQM INICIO E DESTINO no Jogador
     defineCaminhoDoJogador(sqmGlobalDoPlayer, sqmGlobalClicado);
 
     //INICIA A BUSCA DO MELHOR CAMINHO
-    let caminhoFinal = retornaMelhorCaminho(sqmGlobalDoPlayer); 
+    console.log("SQM IDS DO SQM INICIAL")
+    let caminhoFinal = retornaMelhorCaminho(sqmGlobalDoPlayer);
 
-    let caminhoFinal2 = verificaVizinhos(retornaIndexSqmGlobal(sqmGlobalClicado)); 
+    // console.log("SQM IDS DO SQM FINAL")
+    // let caminhoFinal2 = verificaVizinhos(retornaIndexSqmGlobal(sqmGlobalClicado)); 
 
 
     // console.log(indexSqmLocalDoPlayer);

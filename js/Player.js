@@ -29,7 +29,10 @@ export default class Player {
             sqmFim: null,
             sqmOrigem: null,
             sqmDestino: null,
-            sqmVerificado: null
+            sqmVerificado: null,
+            listaDeSqmsGerais: [],
+            listaDeSqmsPossiveis: [],
+            caminhoFinal: []
         }
     }
     

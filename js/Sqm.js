@@ -1,4 +1,4 @@
-export default class Mapa {
+export default class Sqm {
     constructor(ctx,id,sprite,sx,sy,sw,sh,px,py,pw,ph,mapaViewPosX,mapaViewPosY,colunaGeral,linhaGeral,renderLocalCol,renderLocalLin,fixPosX,fixPosY,renderSizeX,renderSizeY,sqmSizeX,sqmSizeY,mapaview,podemover,arrasto,podejogaritem){
         this.ctx = ctx;
         this.id= id;
