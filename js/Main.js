@@ -688,3 +688,73 @@ addEventListener("keydown", function(e){
     }
 
 })
+
+
+////***MOVIMENTAÇÃO VIA CLICK  */////
+////***MOVIMENTAÇÃO VIA CLICK  */////
+////***MOVIMENTAÇÃO VIA CLICK  */////
+
+//Algoritmos auxiliares
+function retornaIndexLocalDoPlayer(){ 
+    let sqmPlayer = Math.floor(maxSqmX * maxSqmY / 2);
+    return sqmPlayer;
+}
+function retornaSqmGlobalViaSqmLocal(sqmLocal){
+    return mapaView.sqms[sqmLocal];
+}
+function retornaIndexLocalSqmClicado(mousePosX, mousePosY){
+    //Define Limite do MapaLocal
+    let localMapPositionX = mapaView.position.x;
+    let localMapPositionY = mapaView.position.y;
+    let maxLocalMapaSizeX = localMapPositionX + (mapaView.sqmSizeX * mapaView.maxSqmX);
+    let maxLocalMapaSizeY = localMapPositionY + (mapaView.sqmSizeY * mapaView.maxSqmY);
+
+     //Verifica se o clique está dentro da área MapaView (área jogavel)
+    if(mousePosX >= localMapPositionX && mousePosX <= maxLocalMapaSizeX && mousePosY >= localMapPositionY && mousePosY <= maxLocalMapaSizeY) {
+        //RETORNA O SQM CLICADO
+        let colunaLocalClicada = (Math.floor((mousePosX - localMapPositionX) / mapaView.sqmSizeX));
+        let linhaLocalClicada = (Math.floor((mousePosY - localMapPositionY) / mapaView.sqmSizeY)) * 15;
+        let sqmClicado = colunaLocalClicada + linhaLocalClicada;
+
+        return sqmClicado;
+    } 
+    
+    return 82; 
+}
+
+function defineCaminhoDoJogador(sqmInicio, sqmFim){
+    jogador.caminho.sqmInicio = sqmInicio;
+    jogador.caminho.sqmFim = sqmFim;
+    jogador.caminho.sqmOrigem = sqmInicio;
+    jogador.caminho.sqmDestino = sqmFim;
+}
+function retornaIndexSqmGlobal(sqmGlobal){
+    let indexSqmGlobal = mapaGeral.sqms.findIndex(obj => obj.id === sqmGlobal.id);
+    console.log(indexSqmGlobal);
+    return indexSqmGlobal;
+}
+//Fim dos Algoritmos auxiliares
+
+//Algoritmo de retornar melhor caminho
+function retornaMelhorCaminho(sqmGlobal){
+    let indexSqmGlobal = retornaIndexSqmGlobal(sqmGlobal);
+}
+
+addEventListener("mousedown", function(e){
+    let indexSqmLocalDoPlayer = retornaIndexLocalDoPlayer();
+    let indexSqmLocalClicado = retornaIndexLocalSqmClicado(e.clientX, e.clientY);
+
+    let sqmGlobalDoPlayer = retornaSqmGlobalViaSqmLocal(indexSqmLocalDoPlayer);
+    let sqmGlobalClicado = retornaSqmGlobalViaSqmLocal(indexSqmLocalClicado);
+
+    //Salva as informações do SQM INICIO E DESTINO no Jogador
+    defineCaminhoDoJogador(sqmGlobalDoPlayer, sqmGlobalClicado);
+
+    //INICIA A BUSCA DO MELHOR CAMINHO
+    let caminhoFinal = retornaMelhorCaminho(sqmGlobalDoPlayer); 
+
+    // console.log(indexSqmLocalDoPlayer);
+    // console.log(sqmGlobalDoPlayer);
+    // console.log(indexSqmLocalClicado);
+    // console.log(sqmGlobalClicado);
+})

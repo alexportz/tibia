@@ -22,6 +22,14 @@ export default class Player {
             gapFrame:4, //Define a cada qnts sprites devemos pular para cada render
             speedAnimation: 0.2, //Define a velocidade de animação
             maxFrames: 12 //Define o nro total maximo de players no sprite animação
+        };
+
+        this.caminho = {
+            sqmInicio: null,
+            sqmFim: null,
+            sqmOrigem: null,
+            sqmDestino: null,
+            sqmVerificado: null
         }
     }
     
