@@ -427,108 +427,245 @@ let contador = 0;
 let velocidade = 1;
 let movendo = false;
 
-function movimentar(){ 
+function movimentar(){
     if(movendo){
-        contador++;
+        if(jogador.caminho.sqmFim != null){ 
+            contador++;
+            let sqmOrigem = jogador.caminho.sqmOrigem;
+            // let sqmDestino = jogador.caminho.sqmDestino;
+            let sqmDestino = jogador.caminho.caminhoFinal[jogador.caminho.caminhoFinal.length -2];
 
-        //MOVE DIAG. NE
-        if(linhaNow < linhaInicial && colunaNow > colunaInicial){ 
-            mapaView.sqms.forEach( sqm => { sqm.sprite.py +=velocidade; sqm.sprite.px -=velocidade;});
-            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py +=velocidade; sqmBorda.sprite.px -=velocidade;});
-            if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
-                contador = 0;
-                colunaInicial = colunaNow;
-                linhaInicial = linhaNow;
-                movendo = false;
-                createMapView();
+            let posicaoColunaAtual = sqmOrigem.sqmCol;
+            let posicaoLinhaAtual = sqmOrigem.sqmLin;
+            let posicaoColunaDestino = sqmDestino.sqmCol;
+            let posicaoLinhaDestino = sqmDestino.sqmLin;
+
+            let diferencialColuna = posicaoColunaDestino - posicaoColunaAtual;
+            let diferencialLinha = posicaoLinhaDestino - posicaoLinhaAtual;
+
+            let speedX = velocidade * diferencialColuna;
+            let speedY = velocidade * diferencialLinha; 
+            console.log("SPEED", speedX, speedY);
+
+            //MOVE
+            // console.log("START",posicaoColunaAtual, posicaoColunaDestino);
+            if(posicaoColunaAtual != posicaoColunaDestino){ 
+
+                if(posicaoColunaAtual < posicaoColunaDestino){
+                    mapaView.sqms.forEach( sqm => { sqm.sprite.py +=speedY; });
+                    mapaView.sqmsBorda.forEach( sqmBorda => {  sqmBorda.sprite.py +=speedY; });
+                } else
+                if(posicaoColunaAtual > posicaoColunaDestino){
+                    mapaView.sqms.forEach( sqm => { sqm.sprite.py -=speedY; });
+                    mapaView.sqmsBorda.forEach( sqmBorda => {  sqmBorda.sprite.py -=speedY; });
+                } else
+                if(posicaoLinhaAtual < posicaoLinhaDestino){
+                    mapaView.sqms.forEach( sqm => { sqm.sprite.px -=speedX;});
+                    mapaView.sqmsBorda.forEach( sqmBorda => {sqmBorda.sprite.px -=speedX;});
+                } else
+                if(posicaoLinhaAtual > posicaoLinhaDestino){
+                    mapaView.sqms.forEach( sqm => { sqm.sprite.px +=speedX;});
+                    mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.px +=speedX;});
+                }
+
+                if(contador >= 72){
+                    contador = 0;
+                    // movendo = false;
+                    jogador.caminho.caminhoFinal.shift();
+                    console.log(jogador.caminho.caminhoFinal);
+                    //Desativa o movimento se não houver mais caminhos
+                    if(jogador.caminho.caminhoFinal.length <= 1){
+                        movendo = false;
+                    }
+                }
+                // if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
+                //     contador = 0; 
+                //     movendo = false;
+                //     console.log(jogador.caminho.caminhoFinal);
+
+                //     // //Remove o último elemento do caminho
+                //     // removeUltimoElementoCaminho(); 
+                //     // console.log("END",posicaoColunaAtual, posicaoColunaDestino);
+
+                //     // //Salva as informações do SQM INICIO E DESTINO no Jogador
+                //     // console.log("HAR",retornaSqmLocalViaSqmGlobal(sqmDestino), retornaSqmLocalViaSqmGlobal(jogador.caminho.sqmFim));
+                //     // defineCaminhoDoJogador( retornaSqmLocalViaSqmGlobal(sqmDestino), retornaSqmLocalViaSqmGlobal(jogador.caminho.sqmFim));
+                //     // console.log(jogador.caminho.caminhoFinal);
+
+                //     // //INICIA A BUSCA DO MELHOR CAMINHO
+                //     // retornaMelhorCaminho(sqmDestino);
+                //     // console.log(jogador.caminho.caminhoFinal);
+
+                //     // createMapView();
+                // }
             }
-        } else
-        //MOVE DIAG. NO
-        if(linhaNow < linhaInicial && colunaNow < colunaInicial){ 
-            mapaView.sqms.forEach( sqm => { sqm.sprite.py +=velocidade; sqm.sprite.px +=velocidade;});
-            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py +=velocidade; sqmBorda.sprite.px +=velocidade;});
-            if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
-                contador = 0;
-                colunaInicial = colunaNow;
-                linhaInicial = linhaNow;
-                movendo = false;
-                createMapView();
-            }
-        } else
-        //MOVE DIAG. SE
-        if(linhaNow > linhaInicial && colunaNow > colunaInicial){  
-            mapaView.sqms.forEach( sqm => { sqm.sprite.py -=velocidade; sqm.sprite.px -=velocidade;});
-            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py -=velocidade; sqmBorda.sprite.px -=velocidade;});
-            if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
-                contador = 0;
-                colunaInicial = colunaNow;
-                linhaInicial = linhaNow;
-                movendo = false;
-                createMapView();
-            }
-        } else
-        //MOVE DIAG. SO
-        if(linhaNow > linhaInicial && colunaNow < colunaInicial){  
-            mapaView.sqms.forEach( sqm => { sqm.sprite.py -=velocidade; sqm.sprite.px +=velocidade;});
-            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py -=velocidade; sqmBorda.sprite.px +=velocidade;});
-            if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
-                contador = 0;
-                colunaInicial = colunaNow;
-                linhaInicial = linhaNow;
-                movendo = false;
-                createMapView();
-            }
-        } else
-        //MOVE LESTE
-        if(colunaNow > colunaInicial){ 
-            mapaView.sqms.forEach( sqm => { sqm.sprite.px -=velocidade; });
-            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.px -=velocidade; });
-            //CASO ATINGIU O PROX. SQM
-            if(contador >= sqmRenderSizeX){
-                contador = 0;
-                colunaInicial = colunaNow;
-                movendo = false;
-                createMapView();
-            }
-        } else
-        //MOVE OESTE
-        if(colunaNow < colunaInicial){ 
-            mapaView.sqms.forEach( sqm => { sqm.sprite.px +=velocidade; });
-            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.px +=velocidade; });  
-            //CASO ATINGIU O PROX. SQM
-            if(contador >= sqmRenderSizeX){
-                contador = 0;
-                colunaInicial = colunaNow;
-                movendo = false;
-                createMapView();
-            }
-        } else
-        //MOVE SUL
-        if(linhaNow > linhaInicial){
-            mapaView.sqms.forEach( sqm => { sqm.sprite.py -=velocidade; });
-            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py -=velocidade; }); 
-            //CASO ATINGIU O PROX. SQM
-            if(contador >= sqmRenderSizeY){
-                contador = 0;
-                linhaInicial = linhaNow;
-                movendo = false;
-                createMapView();
-            }
-        } else
-        //MOVE NORT
-        if(linhaNow < linhaInicial){
-            mapaView.sqms.forEach( sqm => { sqm.sprite.py +=velocidade; });
-            mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py +=velocidade; }); 
-            //CASO ATINGIU O PROX. SQM
-            if(contador >= sqmRenderSizeY){
-                contador = 0;
-                linhaInicial = linhaNow;
-                movendo = false;
-                createMapView();
-            }
-        } 
+
+        }
     }
 }
+
+function removeUltimoElementoCaminho(){
+    if(jogador.caminho.caminhoFinal.length > 0){
+        jogador.caminho.caminhoFinal.pop();
+    }
+}
+
+// function movimentar(){ 
+//     console.log(movendo);
+//     if(movendo){
+//         contador++;
+
+//         //VERIFICA MOVIMENTACAO VIA MOUSE
+//         if(jogador.caminho.caminhoFinal.length >= 1){
+//             let atualSqm = jogador.caminho.caminhoFinal[jogador.caminho.caminhoFinal.length -1];
+//             let proxSqm = jogador.caminho.caminhoFinal[jogador.caminho.caminhoFinal.length -2];
+
+//             console.log(atualSqm, proxSqm);
+
+//             if(proxSqm == undefined){
+//                 proxSqm = atualSqm;
+//             }
+
+//             let colAtual = atualSqm.sqmCol;
+//             let linAtual = atualSqm.sqmLin;
+//             let colProx = proxSqm.sqmCol;
+//             let linProx = proxSqm.sqmLin;
+//             let diffColuna = colAtual - colProx;
+//             let diffLinha = linAtual - linProx;
+
+//             linhaInicial = diffLinha;
+//             colunaInicial = diffColuna;
+
+//             console.log(diffColuna, diffLinha);
+
+//             //VERIFICA SE DEU O TEMPO DO CONTADOR PARA PARAR O MOVIMENTO
+//             if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
+//                 contador = 0;
+
+//                 // Remove o último elemento do caminho
+//                 jogador.caminho.caminhoFinal.splice( jogador.caminho.caminhoFinal.length -1, 1);
+//                 colunaInicial = colunaNow;
+//                 linhaInicial = linhaNow;
+//                 linhaNow = linhaInicial;
+//                 colunaNow = colunaInicial;
+
+
+//                 // console.log("INFOS");
+//                 // console.log(jogador.caminho.caminhoFinal.length);
+//                 // console.log(jogador.caminho.caminhoFinal);
+
+//                 // //Refaz o caminho para verificar alterações
+//                 // defineCaminhoDoJogador(jogador.caminho.caminhoFinal[jogador.caminho.caminhoFinal.length -2], jogador.caminho.caminhoFinal[0]);
+
+//                 // //INICIA A BUSCA DO MELHOR CAMINHO
+//                 // console.log("SQM IDS DO SQM INICIAL");
+//                 // retornaMelhorCaminho(jogador.caminho.caminhoFinal[jogador.caminho.caminhoFinal.length -1]);
+//             }
+//         } else {
+//             movendo = false;
+//         }
+//         //FIM VERIFICAÇÃO VIA MOUSE 
+
+
+
+//         //MOVE DIAG. NE
+//         if(linhaNow < linhaInicial && colunaNow > colunaInicial){ 
+//             mapaView.sqms.forEach( sqm => { sqm.sprite.py +=velocidade; sqm.sprite.px -=velocidade;});
+//             mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py +=velocidade; sqmBorda.sprite.px -=velocidade;});
+//             if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
+//                 contador = 0;
+//                 colunaInicial = colunaNow;
+//                 linhaInicial = linhaNow;
+//                 movendo = false;
+//                 createMapView();
+//             }
+//         } else
+//         //MOVE DIAG. NO
+//         if(linhaNow < linhaInicial && colunaNow < colunaInicial){ 
+//             mapaView.sqms.forEach( sqm => { sqm.sprite.py +=velocidade; sqm.sprite.px +=velocidade;});
+//             mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py +=velocidade; sqmBorda.sprite.px +=velocidade;});
+//             if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
+//                 contador = 0;
+//                 colunaInicial = colunaNow;
+//                 linhaInicial = linhaNow;
+//                 movendo = false;
+//                 createMapView();
+//             }
+//         } else
+//         //MOVE DIAG. SE
+//         if(linhaNow > linhaInicial && colunaNow > colunaInicial){  
+//             mapaView.sqms.forEach( sqm => { sqm.sprite.py -=velocidade; sqm.sprite.px -=velocidade;});
+//             mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py -=velocidade; sqmBorda.sprite.px -=velocidade;});
+//             if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
+//                 contador = 0;
+//                 colunaInicial = colunaNow;
+//                 linhaInicial = linhaNow;
+//                 movendo = false;
+//                 createMapView();
+//             }
+//         } else
+//         //MOVE DIAG. SO
+//         if(linhaNow > linhaInicial && colunaNow < colunaInicial){  
+//             mapaView.sqms.forEach( sqm => { sqm.sprite.py -=velocidade; sqm.sprite.px +=velocidade;});
+//             mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py -=velocidade; sqmBorda.sprite.px +=velocidade;});
+//             if(contador >= sqmRenderSizeX || contador >= sqmRenderSizeY){
+//                 contador = 0;
+//                 colunaInicial = colunaNow;
+//                 linhaInicial = linhaNow;
+//                 movendo = false;
+//                 createMapView();
+//             }
+//         } else
+//         //MOVE LESTE
+//         if(colunaNow > colunaInicial){ 
+//             mapaView.sqms.forEach( sqm => { sqm.sprite.px -=velocidade; });
+//             mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.px -=velocidade; });
+//             //CASO ATINGIU O PROX. SQM
+//             if(contador >= sqmRenderSizeX){
+//                 contador = 0;
+//                 colunaInicial = colunaNow;
+//                 movendo = false;
+//                 createMapView();
+//             }
+//         } else
+//         //MOVE OESTE
+//         if(colunaNow < colunaInicial){ 
+//             mapaView.sqms.forEach( sqm => { sqm.sprite.px +=velocidade; });
+//             mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.px +=velocidade; });  
+//             //CASO ATINGIU O PROX. SQM
+//             if(contador >= sqmRenderSizeX){
+//                 contador = 0;
+//                 colunaInicial = colunaNow;
+//                 movendo = false;
+//                 createMapView();
+//             }
+//         } else
+//         //MOVE SUL
+//         if(linhaNow > linhaInicial){
+//             mapaView.sqms.forEach( sqm => { sqm.sprite.py -=velocidade; });
+//             mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py -=velocidade; }); 
+//             //CASO ATINGIU O PROX. SQM
+//             if(contador >= sqmRenderSizeY){
+//                 contador = 0;
+//                 linhaInicial = linhaNow;
+//                 movendo = false;
+//                 createMapView();
+//             }
+//         } else
+//         //MOVE NORT
+//         if(linhaNow < linhaInicial){
+//             mapaView.sqms.forEach( sqm => { sqm.sprite.py +=velocidade; });
+//             mapaView.sqmsBorda.forEach( sqmBorda => { sqmBorda.sprite.py +=velocidade; }); 
+//             //CASO ATINGIU O PROX. SQM
+//             if(contador >= sqmRenderSizeY){
+//                 contador = 0;
+//                 linhaInicial = linhaNow;
+//                 movendo = false;
+//                 createMapView();
+//             }
+//         } 
+//     }
+// }
 
 //DETECTA OBSTACULO
 function verificaObstaculos(){
@@ -551,6 +688,9 @@ function verificaObstaculos(){
 
 //Detecta Clique
 addEventListener("keydown", function(e){
+
+    //Limpar caminhos
+    limpaCaminhos();
 
     let tecla = e.code;
 
@@ -706,6 +846,9 @@ function retornaIndexLocalDoPlayer(){
     let sqmPlayer = Math.floor(maxSqmX * maxSqmY / 2);
     return sqmPlayer;
 }
+function retornaSqmLocalViaSqmGlobal(sqmGlobal){
+    return mapaView.sqms.find(sqm => sqm.id === sqmGlobal.id);
+}
 function retornaSqmGlobalViaSqmLocal(sqmLocal){
     return mapaView.sqms[sqmLocal];
 }
@@ -814,6 +957,8 @@ function defineCaminhoFinal(){
         // console.log("NOVO SQM PAI:", blocoVerificado);
     }
     
+    //Ativa o movendo para caminhos
+    movendo = true;
 }
 function limpaCaminhos(){
     jogador.caminho.listaDeSqmsGerais = [];
@@ -877,7 +1022,7 @@ function verificaVizinhos(indexDoSqmGlobal){
 
             //Define os calculos e pesos
             let distanciaInicial = retornaDistanciaInicial(sqm, jogador.caminho.sqmInicio);
-            let distanciaFinal = retornaDistanciaFinal(sqm, jogador.caminho.sqmDestino);
+            let distanciaFinal = retornaDistanciaFinal(sqm, jogador.caminho.sqmFim);
             let pesoDoMovimento = (listaVizinhosDiagonais.includes(sqm)) ? 10 : 10;
             let sqmPai = sqmActual;
             let indicador = distanciaInicial + distanciaFinal + pesoDoMovimento;
@@ -922,7 +1067,7 @@ function verificaVizinhos(indexDoSqmGlobal){
     // console.log("SQM VERIFICADO: ", jogador.caminho.sqmVerificado);
 
     //Altera o Label do tipo de BLOCO
-     if(jogador.caminho.sqmVerificado.id == jogador.caminho.sqmDestino.id){
+     if(jogador.caminho.sqmVerificado.id == jogador.caminho.sqmFim.id){
         jogador.caminho.listaDeSqmsGerais[0].tipoDeBloco = "destino";
      }
 
@@ -933,8 +1078,8 @@ function verificaVizinhos(indexDoSqmGlobal){
     // console.log(jogador.caminho.listaDeSqmsGerais);
 
     //Verifica se o sqmAtual é o destino
-    // console.log(jogador.caminho.sqmVerificado.id, jogador.caminho.sqmDestino.id);
-    if(jogador.caminho.sqmVerificado.id == jogador.caminho.sqmDestino.id){
+    // console.log(jogador.caminho.sqmVerificado.id, jogador.caminho.sqmFim.id);
+    if(jogador.caminho.sqmVerificado.id == jogador.caminho.sqmFim.id){
         encontrouDestino = true;
         console.log("# # # Chegou ao destino # # #");
         //Define o tipo de bloco como destino
@@ -952,7 +1097,9 @@ function retornaMelhorCaminho(sqmInicial){
 }
 
 addEventListener("mousedown", function(e){
+    
     limpaCaminhos();
+
     let indexSqmLocalDoPlayer = retornaIndexLocalDoPlayer();
     let indexSqmLocalClicado = retornaIndexLocalSqmClicado(e.clientX, e.clientY);
 
@@ -965,6 +1112,7 @@ addEventListener("mousedown", function(e){
     }
 
     //Salva as informações do SQM INICIO E DESTINO no Jogador
+    console.log("HER",sqmGlobalDoPlayer, sqmGlobalClicado);
     defineCaminhoDoJogador(sqmGlobalDoPlayer, sqmGlobalClicado);
 
     //INICIA A BUSCA DO MELHOR CAMINHO
